@@ -1,0 +1,36 @@
+{
+  //搜索排除
+  "search.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/bin": true,
+    "**/build": true,
+    "**/.gradle": true,
+    "**/.settings": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/node_modules": true,
+    "**/dist": true
+  },
+  // 文件排除
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/bin": true,
+    "**/build": true,
+    "**/.gradle": true,
+    "**/.settings": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/node_modules": true,
+    "**/dist": true
+  }
+}
