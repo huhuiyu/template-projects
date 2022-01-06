@@ -1,0 +1,52 @@
+# 服务器基本配置
+server:
+  # 服务端口
+  port: 20000
+  # 请求应答编码
+  servlet:
+    encoding:
+      force: true
+      charset: UTF-8
+# spring配置
+spring:
+  # 邮箱配置
+  mail:
+    username: service@gaopeng623.top
+    host: smtp.qiye.aliyun.com
+    port: 465
+    protocol: smtps
+    password: service@GP
+    default-encoding: UTF-8
+  # 域配置，用于区分应用
+  jmx:
+    default-domain: top.huhuiyu.springboot.template
+  # 是否允许静态资源映射，配置swagger文档必须开启
+  web: 
+    resources:
+      add-mappings: true
+  # 如果资源无法找到是否抛出异常，spring.web.resources.add-mappings配置为true则本配置无效
+  mvc:
+    throw-exception-if-no-handler-found: true
+  # json配置
+  jackson:
+    # 不输出null值属性
+    default-property-inclusion: non-null
+    # 日期时间信息应答为时间戳
+    serialization:
+      write-dates-as-timestamps: true
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 5MB
+      max-file-size: 2MB
+      max-request-size: 2MB
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://服务器地址:3306/数据库名称?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8
+    username: 数据库用户名
+    password: 数据库密码
+    hikari:
+      connection-test-query: select 1
+      max-lifetime: 60000

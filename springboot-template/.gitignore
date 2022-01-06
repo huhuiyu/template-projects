@@ -4,3 +4,5 @@
 /.settings
 /bin
 /build
+/src/main/resources/application.yml
+/logs

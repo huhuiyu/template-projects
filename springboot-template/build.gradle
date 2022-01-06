@@ -49,4 +49,31 @@ repositories {
 
 //项目依赖的第三方库配置
 dependencies {
+  // springboot网页项目依赖
+  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+  // springboot校验框架依赖
+  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+  // email
+  implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
+
+  // springboot开发工具，可以热部署代码（不要用于生成环境）
+  providedCompile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+  
+  // 打包tomcat的war文件依赖
+  providedCompile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+  
+  // springboot测试依赖
+  testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+
+}
+
+configurations.implementation {
+  // 排除log4j，因为项目使用的是logback
+  exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+  exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+}
+
+bootRun {
+  // 热部署监听目录
+  sourceResources sourceSets.main
 }
