@@ -55,12 +55,22 @@ dependencies {
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
   // email
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
-
+  // 配置文件加密
+  implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.4'
+  
+  // lombok工具
+  compileOnly 'org.projectlombok:lombok:1.18.22'
+  annotationProcessor 'org.projectlombok:lombok:1.18.22'
+  
   // springboot开发工具，可以热部署代码（不要用于生成环境）
   providedCompile group: 'org.springframework.boot', name: 'spring-boot-devtools'
   
   // 打包tomcat的war文件依赖
   providedCompile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+  
+  // lombok工具
+  testCompileOnly 'org.projectlombok:lombok:1.18.22'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
   
   // springboot测试依赖
   testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

@@ -1,24 +1,37 @@
 package top.huhuiyu.springboot.template;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import java.util.Random;
 import java.util.Scanner;
 
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import top.huhuiyu.springboot.template.controller.TestController;
+import top.huhuiyu.springboot.template.base.BaseResult;
 
-@WebMvcTest(TestController.class)
+/**
+ * 主测试
+ * 
+ * @author DarkKnight
+ *
+ */
+@SpringBootTest
 public class MainTest {
+
+  private static final Logger log = LoggerFactory.getLogger(MainTest.class);
   @Autowired
-  private MockMvc mvc;
+  private StringEncryptor encryptor;
+
+  @Test
+  public void lombok() throws Exception {
+    BaseResult result1 = new BaseResult(200, "hello", true, "lombok");
+    BaseResult result2 = new BaseResult();
+    System.out.println(String.format("%s%n%s", result1, result2));
+  }
 
   @Test
   public void res() throws Exception {
@@ -28,10 +41,13 @@ public class MainTest {
   }
 
   @Test
-  public void index() throws Exception {
-    final String param = "abc" + new Random().nextInt();
-    ResultActions action = this.mvc.perform(get("/test/index").param("test", param));
-    MvcResult result = action.andReturn();
-    assertEquals(param, result.getResponse().getContentAsString());
+  public void encrypt() throws Exception {
+    log.debug(encryptor.encrypt("user-pwd"));
   }
+
+  @Test
+  public void decrypt() throws Exception {
+    log.debug(encryptor.decrypt("g86U4xgLKixpsWxWguiOWI3iQfp2qk12dGSsXjTKoQvwzb59pPeflwRhhIWwAD6L"));
+  }
+
 }

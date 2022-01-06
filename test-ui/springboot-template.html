@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>胡辉煜</title>
+  <meta name="author" content="胡辉煜">
+  <meta name="keywords" content="胡辉煜">
+  <meta name="description" content="胡辉煜">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <link rel="shortcut icon" href="https://klcxy.top/oss-manage-service/ossinfo/queryOssUrl?tbOssInfo.oiid=95" type="image/jpeg">
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+</head>
+
+<body>
+
+  <div id="app">
+    <div>服务器地址：{{server}}</div>
+    <hr>
+    <div>
+      <div class="input-group p-2">
+        <input class="form-control" type="text" v-model="info" placeholder="lombok测试信息">
+        <span class="btn btn-primary input-group-text" @click="sendLombok">发送</span>
+      </div>
+      <div>{{lombok}}</div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="col-3">
+        <input class="form-control" type="text" v-model="mailInfo.to" placeholder="邮箱">
+      </div>
+      <div class="col-3">
+        <input class="form-control" type="text" v-model="mailInfo.subject" placeholder="主题">
+      </div>
+      <div class="col-5">
+        <input class="form-control" type="text" v-model="mailInfo.content" placeholder="内容">
+      </div>
+      <div class="col-1">
+        <span class="btn btn-primary input-group-text" @click="sendMail">发送</span>
+      </div>
+    </div>
+    <div>{{mail}}</div>
+
+  </div>
+
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="lib/axios.min.js"></script>
+  <script src="lib/qs.min.js"></script>
+  <script src="lib/spark-md5.min.js"></script>
+  <script src="lib/vue.min.js"></script>
+
+  <script type="module" src="js/springboot-template.js"></script>
+
+</body>
+
+</html>

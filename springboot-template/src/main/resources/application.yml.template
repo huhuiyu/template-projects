@@ -7,6 +7,10 @@ server:
     encoding:
       force: true
       charset: UTF-8
+# 加密密码，线上可以通过--jasypt.encryptor.password=darkknight参数动态配置，避免密码泄露
+jasypt:
+  encryptor:
+    password: darkknight
 # spring配置
 spring:
   # 邮箱配置

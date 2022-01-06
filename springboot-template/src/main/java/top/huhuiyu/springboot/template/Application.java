@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * SpringBoot启动类
  * 
- * @author 胡辉煜
+ * @author DarkKnight
  */
 @SpringBootApplication
 @ComponentScan(basePackageClasses = { Application.class })

@@ -22,4 +22,6 @@
 
 ## 项目部分
 
+- 后端项目说明
+  - 为了安全没有提供`application.yml`，但是提供了`application.yml.template`配置模板文件
 - [springboot模板项目](/springboot-template/)
