@@ -21,6 +21,7 @@ import top.huhuiyu.springboot.template.base.BaseResult;
 public class TestMessage extends BaseResult {
   private static final long serialVersionUID = 6114709789926646572L;
 
-  private Date timestamp;
+  private Date now;
+  private Long timestamp;
 
 }

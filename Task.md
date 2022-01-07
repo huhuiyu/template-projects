@@ -1,6 +1,5 @@
 # 任务列表
 
-- 邮箱接口测试（不允许并发）
 - swagger3文档
 - token新版本（使用redis）
 - 验证war打包文件（使用plain.war）
@@ -10,3 +9,4 @@
 - websocket心跳
 - lombok
 - 统一错误拦截和表单校验
+- 搬移加密记事本

@@ -1,7 +1,5 @@
 package top.huhuiyu.springboot.template.controller;
 
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import top.huhuiyu.springboot.template.dao.UtilDAO;
 import top.huhuiyu.springboot.template.entity.MailInfo;
 import top.huhuiyu.springboot.template.message.TestMessage;
 import top.huhuiyu.springboot.template.service.MailService;
@@ -28,6 +27,8 @@ public class TestController {
 
   @Autowired
   private MailService mailService;
+  @Autowired
+  private UtilDAO utilDAO;
 
   @GetMapping("/index")
   public String index(String test) throws Exception {
@@ -38,7 +39,8 @@ public class TestController {
   public TestMessage lombok(String info) throws Exception {
     TestMessage result = new TestMessage();
     result.setSuccessInfo(info);
-    result.setTimestamp(new Date());
+    result.setTimestamp(utilDAO.queryTimestamp());
+    result.setNow(utilDAO.queryTime());
     return result;
   }
 
