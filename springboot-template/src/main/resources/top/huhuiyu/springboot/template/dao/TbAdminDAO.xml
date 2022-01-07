@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.huhuiyu.springboot.template.dao.TbAdminDAO">
+
+  <select id="queryAll" resultType="TbAdmin">
+    select aid,username,password,salt,nickname,role,access_key,enable,lastupdate from tb_admin
+    <trim prefix="where" prefixOverrides="and">
+      <if test="tbAdmin!=null and tbAdmin.accessKey!=null and tbAdmin.accessKey!=''">
+        and access_key = #{tbAdmin.accessKey}
+      </if>
+    </trim>
+    order by aid desc
+  </select>
+
+
+</mapper>

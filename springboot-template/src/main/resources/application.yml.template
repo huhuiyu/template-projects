@@ -54,3 +54,6 @@ spring:
     hikari:
       connection-test-query: select 1
       max-lifetime: 60000
+# mybatis配置（带mybatis-plus插件）
+ mybatis-plus:
+  config-location: classpath:mybatis-config.xml

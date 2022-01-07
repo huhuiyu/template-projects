@@ -54,4 +54,9 @@ public interface SystemConstants {
    * websocket类型（聊天）
    */
   String WS_TYPE_CHAT = "chat";
+
+  /**
+   * 数据库最大分页配置
+   */
+  Long MAX_PAGE_SIZE = 1000l;
 }

@@ -59,6 +59,9 @@ dependencies {
   implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.4'
   // mybatis整合
   implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.2.1'
+  // mybatis-plus插件
+  implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.5.0'
+
   // mysql驱动
   implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
   
