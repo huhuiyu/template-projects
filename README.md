@@ -17,11 +17,11 @@
   - 修改[java-home-template.ps1](/scripts/java-home-template.ps1)文件为`java-home.ps1`
   - 修改[gradle-home-template.ps1](/scripts/gradle-home-template.ps1)文件为`gradle-home.ps1`
   - 修改上面两个文件中的目录信息指向到真实的jdk和gradle目录即可
-  - 执行[java-cmd.ps1](/scripts/java-cmd.ps1)可以等到一个java的命令执行环境
-  - 执行[gradle-cmd.ps1](/scripts/gradle-cmd.ps1)可以等到一个gradle的命令执行环境
+  - 执行[java-cmd.ps1](/scripts/java-cmd.ps1)可以得到一个java的命令执行环境
+  - 执行[gradle-cmd.ps1](/scripts/gradle-cmd.ps1)可以得到一个gradle的命令执行环境
 
 ## 项目部分
 
 - 后端项目说明
-  - 为了安全没有提供`application.yml`，但是提供了`application.yml.template`配置模板文件
+  - 为了安全没有提供`application.yml`，但是在测试文件夹里面提供了`application.yml.template`配置模板文件
 - [springboot模板项目](/springboot-template/)

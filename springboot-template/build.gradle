@@ -94,3 +94,12 @@ bootRun {
   // 热部署监听目录
   sourceResources sourceSets.main
 }
+
+jar {
+  project.version ''
+}
+
+war {
+  project.version ''
+}
+

@@ -7,13 +7,13 @@ server:
     encoding:
       force: true
       charset: UTF-8
-# 加密密码，线上可以通过--jasypt.encryptor.password=加密密码参数动态配置，避免密码泄露
+# 加密密码，线上可以通过--jasypt.encryptor.password=密钥参数动态配置，避免密码泄露
 jasypt:
   encryptor:
-    password: 加密密码
+    password: 密钥
 # spring配置
 spring:
-  # 邮箱配置
+  # 阿里企业邮箱配置
   mail:
     username: 邮箱用户名
     host: smtp.qiye.aliyun.com
@@ -23,14 +23,14 @@ spring:
     default-encoding: UTF-8
   # 域配置，用于区分应用
   jmx:
-    default-domain: top.huhuiyu.springboot.template
+    default-domain: springboot-template
   # 是否允许静态资源映射，配置swagger文档必须开启
   web: 
     resources:
       add-mappings: true
   # 如果资源无法找到是否抛出异常，spring.web.resources.add-mappings配置为true则本配置无效
   mvc:
-    throw-exception-if-no-handler-found: true
+    throw-exception-if-no-handler-found: false
   # json配置
   jackson:
     # 不输出null值属性
@@ -48,12 +48,11 @@ spring:
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://服务器地址:3306/数据库名称?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8
+    url: jdbc:mysql://数据库服务器地址:3306/数据库名称?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8
     username: 数据库用户名
     password: 数据库密码
     hikari:
       connection-test-query: select 1
       max-lifetime: 60000
-# mybatis配置（带mybatis-plus插件）
- mybatis-plus:
+mybatis-plus:
   config-location: classpath:mybatis-config.xml

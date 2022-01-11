@@ -31,8 +31,10 @@ public class TestController {
   private UtilDAO utilDAO;
 
   @GetMapping("/index")
-  public String index(String test) throws Exception {
-    return test;
+  public TestMessage index(String test) throws Exception {
+    TestMessage message = new TestMessage();
+    message.setSuccessInfo(test);
+    return message;
   }
 
   @PostMapping("/lombok")
