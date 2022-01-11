@@ -1,10 +1,11 @@
-import SERVER from '../lib/server.js';
+import { server, baseUrl } from '../lib/server.js';
+import Vue from '../lib/vue.esm.min.js';
 
 const app = new Vue({
   el: '#app',
   data() {
     return {
-      server: SERVER.getServiceUrl(),
+      server: baseUrl,
       info: '',
       lombok: '',
       mailInfo: {
@@ -17,12 +18,12 @@ const app = new Vue({
   },
   methods: {
     sendMail() {
-      SERVER.ajax('/test/mail', app.mailInfo, function (data) {
+      server.ajax('/test/mail', app.mailInfo, function (data) {
         app.mail = data;
       });
     },
     sendLombok() {
-      SERVER.ajax(
+      server.ajax(
         '/test/lombok',
         {
           info: app.info

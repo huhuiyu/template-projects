@@ -62,3 +62,4 @@ SERVER.md5 = function (info) {
 };
 
 export default SERVER;
+export { SERVER as server, SERVER_BASE_URL as baseUrl };
