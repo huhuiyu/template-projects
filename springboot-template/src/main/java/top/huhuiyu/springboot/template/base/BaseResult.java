@@ -1,5 +1,7 @@
 package top.huhuiyu.springboot.template.base;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ import top.huhuiyu.springboot.template.utils.SystemConstants;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "基础应答", description = "最基本的应答信息")
 public class BaseResult extends BaseEntity {
 
   private static final long serialVersionUID = -1553214759541076761L;
@@ -23,20 +26,24 @@ public class BaseResult extends BaseEntity {
   /**
    * code:服务器应答代码
    */
+  @ApiModelProperty(value = "应答代码")
   private int code = SystemConstants.ERROR_CODE;
   /**
    * message：服务器应答信息，默认为空
    */
+  @ApiModelProperty(value = "应答消息")
   private String message = "";
 
   /**
    * success：服务器是否正确应答，默认为false
    */
+  @ApiModelProperty(value = "成功应答")
   private boolean success = false;
 
   /**
    * 服务器token信息
    */
+  @ApiModelProperty(value = "token令牌")
   private String token;
 
   /**

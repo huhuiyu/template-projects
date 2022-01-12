@@ -6,6 +6,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
+import springfox.documentation.oas.annotations.EnableOpenApi;
+
 /**
  * SpringBoot启动类
  * 
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackageClasses = { Application.class })
+@EnableOpenApi
 public class Application extends SpringBootServletInitializer {
 
   public static void main(String[] args) {

@@ -28,8 +28,8 @@ plugins {
 }
 
 // 代码编译等级
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 // 源码和javadoc编码设置
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
@@ -64,6 +64,8 @@ dependencies {
 
   // mysql驱动
   implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+  // swagger3依赖
+  implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
   
   // lombok工具
   compileOnly 'org.projectlombok:lombok:1.18.22'
