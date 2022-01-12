@@ -12,6 +12,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.service.ParameterType;
 import springfox.documentation.service.RequestParameter;
 import springfox.documentation.spi.DocumentationType;
@@ -20,7 +21,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 /**
  * swagger配置
  * 
- * @author 胡辉煜
+ * @author DarkKnight
  */
 @Configuration
 public class SwaggerConfig {
@@ -32,7 +33,7 @@ public class SwaggerConfig {
   }
 
   private ApiInfo apiInfo() {
-    return new ApiInfoBuilder().title("springboot模板项目").description("springboot模板项目").version("1.0.0").build();
+    return new ApiInfoBuilder().contact(new Contact("胡辉煜", "https://huhuiyu.top", "1069306849@qq.com")).title("springboot模板项目").description("springboot模板项目").version("1.0.0").build();
   }
 
   private List<RequestParameter> getGlobalRequestParameters() {

@@ -66,6 +66,8 @@ dependencies {
   implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
   // swagger3依赖
   implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+  // knife4j界面
+  implementation group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '3.0.3'
   
   // lombok工具
   compileOnly 'org.projectlombok:lombok:1.18.22'
