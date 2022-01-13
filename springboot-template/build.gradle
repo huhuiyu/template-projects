@@ -28,8 +28,8 @@ plugins {
 }
 
 // 代码编译等级
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 // 源码和javadoc编码设置
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
@@ -69,17 +69,12 @@ dependencies {
   // knife4j界面
   implementation group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '3.0.3'
   
+  // springboot开发工具，可以热部署代码（部署时可以去掉）
+  //implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+  
   // lombok工具
   compileOnly 'org.projectlombok:lombok:1.18.22'
   annotationProcessor 'org.projectlombok:lombok:1.18.22'
-  
-  // springboot开发工具，可以热部署代码（不要用于生成环境）
-  providedCompile group: 'org.springframework.boot', name: 'spring-boot-devtools'
-  
-  // 打包tomcat的war文件依赖
-  providedCompile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
-  
-  // lombok工具
   testCompileOnly 'org.projectlombok:lombok:1.18.22'
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
   
@@ -100,10 +95,12 @@ bootRun {
 }
 
 jar {
+  // 打包jar不要添加版本号
   project.version ''
 }
 
 war {
+  // 打包war不要添加版本号
   project.version ''
 }
 

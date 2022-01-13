@@ -64,4 +64,18 @@ public interface SystemConstants {
    * 应用错误代码
    */
   int APP_ERROR_CODE = 500;
+
+  /**
+   * 手机号码正则
+   */
+  String PHONE_CHECK = "^1[3-9]\\d{9}$";
+  /**
+   * 32位md5正则
+   */
+  String MD5_CHECK = "^[a-zA-Z0-9]{32}$";
+
+  /**
+   * 邮箱正则
+   */
+  String EMAIL_CHECK = "^\\w+@\\w+(\\.\\w{2,3})*\\.\\w{2,3}$";
 }
