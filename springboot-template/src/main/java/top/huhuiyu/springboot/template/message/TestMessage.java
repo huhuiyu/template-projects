@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.huhuiyu.springboot.template.base.BaseResult;
+import top.huhuiyu.springboot.template.entity.MailInfo;
 
 /**
  * 测试应答消息
@@ -28,5 +29,7 @@ public class TestMessage extends BaseResult {
   private Date now;
   @ApiModelProperty(value = "当前时间戳，精确到秒的时间戳")
   private Long timestamp;
+  @ApiModelProperty(value = "邮件信息")
+  private MailInfo mailInfo;
 
 }

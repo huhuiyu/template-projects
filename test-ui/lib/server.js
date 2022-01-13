@@ -6,10 +6,18 @@ SERVER.getServiceUrl = function () {
   return SERVER_BASE_URL;
 };
 
-SERVER.ajax = function (path, params, cb, method) {
+/**
+ *
+ * @param {string} path 请求路径
+ * @param {json} params 请求参数
+ * @param {function} cb 回调函数，参数为应答结果
+ * @param {boolean} formdata 是否为formdata请求参数（传入且为true才启用formdata，否则为json格式）
+ * @param {string} method 请求方式，默认为POST
+ */
+SERVER.ajax = function (path, params, cb, formdata, method) {
   let promise = axios({
     url: SERVER_BASE_URL + path,
-    data: Qs.stringify(params, { allowDots: true }),
+    data: formdata ? Qs.stringify(params, { allowDots: true }) : params,
     method: method ? method : 'post',
     headers: {
       token: localStorage.getItem(SERVER_TOKEN_KEY)

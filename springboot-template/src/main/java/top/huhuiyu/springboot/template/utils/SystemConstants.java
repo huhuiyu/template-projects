@@ -59,4 +59,9 @@ public interface SystemConstants {
    * 数据库最大分页配置
    */
   Long MAX_PAGE_SIZE = 1000l;
+
+  /**
+   * 应用错误代码
+   */
+  int APP_ERROR_CODE = 500;
 }

@@ -30,7 +30,8 @@ const app = new Vue({
         },
         function (data) {
           app.lombok = data;
-        }
+        },
+        true
       );
     }
   }

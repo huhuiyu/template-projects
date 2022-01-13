@@ -3,7 +3,9 @@ package top.huhuiyu.springboot.template.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +17,7 @@ import top.huhuiyu.springboot.template.dao.UtilDAO;
 import top.huhuiyu.springboot.template.entity.MailInfo;
 import top.huhuiyu.springboot.template.message.TestMessage;
 import top.huhuiyu.springboot.template.service.MailService;
+import top.huhuiyu.springboot.template.validate.MailInfoValidate;
 
 /**
  * 测试用控制器
@@ -45,15 +48,22 @@ public class TestController {
     return result;
   }
 
-  @ApiOperation(value = "发送邮件", notes = "发送邮件测试")
-  @ApiImplicitParams({ @ApiImplicitParam(name = "to", value = "收件人邮箱", dataTypeClass = String.class, required = true), @ApiImplicitParam(name = "subject", value = "邮件主题", required = true),
-      @ApiImplicitParam(name = "content", value = "邮件内容，可以是html", required = true) })
+  @ApiOperation(value = "发送邮件", notes = "发送邮件测试，全部参数都必须填写")
   @PostMapping("/mail")
-  public TestMessage mail(MailInfo mainInfo) throws Exception {
+  public TestMessage mail(@RequestBody @Validated(value = { MailInfoValidate.Main.class }) MailInfo mainInfo) throws Exception {
     log.debug("邮件信息{}", mainInfo);
     TestMessage result = new TestMessage();
     mailService.sendHtmlMail(mainInfo);
     result.setSuccessInfo("邮件发送成功");
+    return result;
+  }
+
+  @ApiOperation(value = "表单校验", notes = "测试表单校验，只有收件人邮箱必须填写")
+  @PostMapping("/validate")
+  public TestMessage validate(@RequestBody @Validated(value = { MailInfoValidate.Demo.class }) MailInfo mainInfo) throws Exception {
+    log.debug("邮件信息{}", mainInfo);
+    TestMessage result = new TestMessage();
+    result.setSuccessInfo("校验成功");
     return result;
   }
 

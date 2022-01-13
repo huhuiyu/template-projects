@@ -3,6 +3,7 @@ package top.huhuiyu.springboot.template.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,10 +26,12 @@ import springfox.documentation.spring.web.plugins.Docket;
  */
 @Configuration
 public class SwaggerConfig {
+  @Value("${springfox.documentation.swagger-ui.enabled}")
+  private boolean enabled = true;
 
   @Bean
   public Docket createRestApi() {
-    return new Docket(DocumentationType.OAS_30).pathMapping("/").apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.regex("/error").negate()).build()
+    return new Docket(DocumentationType.OAS_30).enable(enabled).pathMapping("/").apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.regex("/error").negate()).build()
         .globalRequestParameters(getGlobalRequestParameters());
   }
 
