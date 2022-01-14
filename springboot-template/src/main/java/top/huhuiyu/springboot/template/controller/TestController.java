@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import top.huhuiyu.springboot.template.dao.UtilDAO;
 import top.huhuiyu.springboot.template.entity.MailInfo;
 import top.huhuiyu.springboot.template.message.TestMessage;
+import top.huhuiyu.springboot.template.model.TestModel;
 import top.huhuiyu.springboot.template.service.MailService;
 import top.huhuiyu.springboot.template.validate.MailInfoValidate;
 
@@ -58,12 +59,33 @@ public class TestController {
     return result;
   }
 
-  @ApiOperation(value = "表单校验", notes = "测试表单校验，只有收件人邮箱必须填写")
-  @PostMapping("/validate")
-  public TestMessage validate(@RequestBody @Validated(value = { MailInfoValidate.Demo.class }) MailInfo mainInfo) throws Exception {
+  @ApiOperation(value = "JSON校验", notes = "测试JSON校验，只有收件人邮箱必须填写")
+  @PostMapping("/validateJson")
+  public TestMessage validateJson(@RequestBody @Validated(value = { MailInfoValidate.Demo.class }) MailInfo mainInfo) throws Exception {
     log.debug("邮件信息{}", mainInfo);
     TestMessage result = new TestMessage();
     result.setSuccessInfo("校验成功");
+    return result;
+  }
+
+  @ApiOperation(value = "表单校验", notes = "测试表单校验，全部参数都必须填写")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "to", value = "收件人邮箱", required = true, example = "123456@qq.com"),
+      @ApiImplicitParam(name = "subject", value = "邮件主题", required = true, example = "邮件测试"), @ApiImplicitParam(name = "content", value = "邮件内容", required = true, example = "<h1>邮件验证码：123456</h1>") })
+  @PostMapping("/validate")
+  public TestMessage validate(@Validated(value = { MailInfoValidate.Main.class }) MailInfo mainInfo) throws Exception {
+    log.debug("邮件信息{}", mainInfo);
+    TestMessage result = new TestMessage();
+    result.setMailInfo(mainInfo);
+    result.setSuccessInfo("校验成功");
+    return result;
+  }
+
+  @ApiOperation(value = "多参数", notes = "测试多参数提交")
+  @PostMapping("/mailList")
+  public TestMessage mailList(@RequestBody TestModel model) throws Exception {
+    log.debug("提交信息：{}", model);
+    TestMessage result = new TestMessage();
+    result.setSuccessInfo("已经成功获取到信息");
     return result;
   }
 
