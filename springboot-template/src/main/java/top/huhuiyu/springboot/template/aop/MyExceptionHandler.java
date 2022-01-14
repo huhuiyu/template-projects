@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -77,6 +78,13 @@ public class MyExceptionHandler {
     // 且spring.web.resources.add-mappings: false
     // 在控制器路径无法访问时会抛出本异常信息
     return BaseResult.getFail(404, "资源不存在");
+  }
+
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public BaseResult handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    // 请求参数异常，一般是格式错误
+    log.error("请求参数错误", ex);
+    return BaseResult.getFail("请检查提交数据格式");
   }
 
   @ExceptionHandler(SQLException.class)

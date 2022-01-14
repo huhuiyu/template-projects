@@ -1,6 +1,9 @@
 package top.huhuiyu.springboot.template.model;
 
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,4 +32,7 @@ public class TestModel extends BaseEntity {
   private TbAdmin user;
   @ApiModelProperty(value = "邮件列表")
   private List<MailInfo> mailList;
+  @ApiModelProperty(value = "测试日期")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date dateInfo;
 }

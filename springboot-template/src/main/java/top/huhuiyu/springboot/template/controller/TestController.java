@@ -89,4 +89,13 @@ public class TestController {
     return result;
   }
 
+  @ApiOperation(value = "数据转换", notes = "测试数据类型转换，只需要提交日期数据")
+  @PostMapping("/converter")
+  public TestMessage converter(@RequestBody TestModel model) throws Exception {
+    log.debug("提交信息：{}", model);
+    TestMessage result = new TestMessage();
+    result.setSuccessInfo("已经成功获取到信息");
+    return result;
+  }
+
 }
