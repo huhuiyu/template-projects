@@ -56,3 +56,9 @@ spring:
       max-lifetime: 60000
 mybatis-plus:
   config-location: classpath:mybatis-config.xml
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
