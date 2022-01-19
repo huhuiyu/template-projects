@@ -78,4 +78,9 @@ public interface SystemConstants {
    * 邮箱正则
    */
   String EMAIL_CHECK = "^\\w+@\\w+(\\.\\w{2,3})*\\.\\w{2,3}$";
+
+  /**
+   * 系统配置key;
+   */
+  String SYSTEM_CONFIG_KEY = "springboot_template_system_config";
 }

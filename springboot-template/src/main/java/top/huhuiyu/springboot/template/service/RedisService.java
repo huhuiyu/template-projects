@@ -1,6 +1,7 @@
 package top.huhuiyu.springboot.template.service;
 
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
+import top.huhuiyu.springboot.template.entity.SystemConfig;
 import top.huhuiyu.springboot.template.entity.TbAdmin;
 
 /**
@@ -42,19 +43,28 @@ public interface RedisService {
    * 
    * @return 完整的token信息
    * 
-   * @throws Exception
+   * @throws Exception 处理发生异常
    */
   RedisTokenInfo saveUser(String token, TbAdmin tbAdmin) throws Exception;
 
   /**
    * 读取token信息
    * 
-   * @param token
+   * @param token信息
    * 
-   * @return 
+   * @return token信息
    * 
-   * @throws Exception
+   * @throws Exception 处理发生异常
    */
   RedisTokenInfo readTokenInfo(String token) throws Exception;
+
+  /**
+   * 获取系统配置
+   * 
+   * @return 系统配置
+   * 
+   * @throws Exception 处理发生异常
+   */
+  SystemConfig readSystemConfig() throws Exception;
 
 }

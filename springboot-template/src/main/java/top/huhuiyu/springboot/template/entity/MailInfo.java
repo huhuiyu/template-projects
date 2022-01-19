@@ -31,7 +31,7 @@ public class MailInfo extends BaseEntity {
   @ApiModelProperty(value = "收件人邮箱", example = "123456@qq.com")
   private String to;
   @NotBlank(message = "邮件主题必须填写", groups = { MailInfoValidate.Main.class })
-  @ApiModelProperty(value = "邮件主题", example = "邮箱验证码", required = true)
+  @ApiModelProperty(value = "邮件主题", example = "邮箱验证码")
   private String subject;
   @NotBlank(message = "邮件内容必须填写", groups = { MailInfoValidate.Main.class })
   @ApiModelProperty(value = "邮件内容", example = "<h1>邮件验证码123456</h1>")

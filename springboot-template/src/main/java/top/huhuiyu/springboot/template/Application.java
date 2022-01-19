@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 import springfox.documentation.oas.annotations.EnableOpenApi;
+import top.huhuiyu.springboot.template.listener.AppReadyListener;
 
 /**
  * SpringBoot启动类
@@ -19,7 +20,9 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 public class Application extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
+    SpringApplication application = new SpringApplication(Application.class);
+    application.addListeners(new AppReadyListener());
+    application.run(args);
   }
 
   @Override

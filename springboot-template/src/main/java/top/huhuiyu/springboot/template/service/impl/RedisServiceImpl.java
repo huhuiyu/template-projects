@@ -1,6 +1,7 @@
 package top.huhuiyu.springboot.template.service.impl;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
+import top.huhuiyu.springboot.template.entity.SystemConfig;
 import top.huhuiyu.springboot.template.entity.TbAdmin;
 import top.huhuiyu.springboot.template.service.RedisService;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
+import top.huhuiyu.springboot.template.utils.SystemConstants;
 
 /**
  * redis服务实现
@@ -24,6 +27,18 @@ public class RedisServiceImpl implements RedisService {
 
   @Autowired
   private StringRedisTemplate stringRedisTemplate;
+
+  @Override
+  public SystemConfig readSystemConfig() throws Exception {
+    ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+    String info = valueOperations.get(SystemConstants.SYSTEM_CONFIG_KEY);
+    if (StringUtils.hasText(info)) {
+      return JsonUtil.parse(info, SystemConfig.class);
+    }
+    SystemConfig config = new SystemConfig();
+    valueOperations.set(SystemConstants.SYSTEM_CONFIG_KEY, JsonUtil.stringify(config));
+    return config;
+  }
 
   @Override
   public RedisTokenInfo readTokenInfo(String token) throws Exception {
@@ -47,8 +62,7 @@ public class RedisServiceImpl implements RedisService {
     }
     // 更新ip信息
     redisTokenInfo.setIp(ip);
-    valueOperations.set(token, JsonUtil.stringify(redisTokenInfo));
-    return redisTokenInfo;
+    return saveTokenInfo(token, redisTokenInfo);
   }
 
   @Override
@@ -65,7 +79,23 @@ public class RedisServiceImpl implements RedisService {
     }
     // 更新用户信息
     redisTokenInfo.setTbAdmin(tbAdmin);
-    valueOperations.set(token, JsonUtil.stringify(redisTokenInfo));
+    return saveTokenInfo(token, redisTokenInfo);
+  }
+
+  /**
+   * 保存token信息
+   * 
+   * @param token          token值
+   * @param redisTokenInfo token信息
+   * 
+   * @return 保存的token值
+   * 
+   * @throws Exception 处理发生异常
+   */
+  private RedisTokenInfo saveTokenInfo(String token, RedisTokenInfo redisTokenInfo) throws Exception {
+    SystemConfig config = readSystemConfig();
+    ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+    valueOperations.set(token, JsonUtil.stringify(redisTokenInfo), config.getTokenTimeout(), TimeUnit.SECONDS);
     return redisTokenInfo;
   }
 

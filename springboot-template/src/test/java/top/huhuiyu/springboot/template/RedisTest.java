@@ -1,6 +1,8 @@
 package top.huhuiyu.springboot.template;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,6 +21,9 @@ import top.huhuiyu.springboot.template.utils.IpUtil;
  */
 @SpringBootTest
 public class RedisTest {
+
+  private static final Logger log = LoggerFactory.getLogger(RedisTest.class);
+
   @Autowired
   private StringRedisTemplate stringRedisTemplate;
   @Autowired
@@ -32,6 +37,7 @@ public class RedisTest {
 
   @Test
   public void testService() throws Exception {
+    log.debug("系统配置：{}", redisService.readSystemConfig());
     String token = redisService.checkToken("f154b74c-780d-48db-b8bb-d7ee660ec9ae");
     redisService.saveIp(token, IpUtil.getIpAddress());
     TbAdmin tbAdmin = new TbAdmin();
@@ -40,6 +46,7 @@ public class RedisTest {
     tbAdmin.setNickname("内置管理员");
     redisService.saveUser(token, tbAdmin);
     RedisTokenInfo redisTokenInfo = redisService.readTokenInfo(token);
-    System.out.println(redisTokenInfo);
+    log.debug("redis信息：{}", redisTokenInfo);
+
   }
 }
