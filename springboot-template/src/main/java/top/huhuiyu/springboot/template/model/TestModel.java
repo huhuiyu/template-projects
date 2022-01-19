@@ -28,11 +28,11 @@ import top.huhuiyu.springboot.template.entity.TbAdmin;
 @ApiModel(value = "测试Model")
 public class TestModel extends BaseEntity {
   private static final long serialVersionUID = -5150604283449799420L;
-  @ApiModelProperty(value = "用户信息")
   private TbAdmin user;
   @ApiModelProperty(value = "邮件列表")
   private List<MailInfo> mailList;
-  @ApiModelProperty(value = "测试日期")
+
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @ApiModelProperty(value = "测试日期", example = "2020-11-12 08:09:10")
   private Date dateInfo;
 }

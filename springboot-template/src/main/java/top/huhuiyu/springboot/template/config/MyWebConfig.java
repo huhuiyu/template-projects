@@ -1,8 +1,14 @@
 package top.huhuiyu.springboot.template.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+
+import top.huhuiyu.springboot.template.aop.MyInterceptor;
 
 /**
  * mvc配置
@@ -12,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer {
+  @Autowired
+  private MyInterceptor myInterceptor;
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
@@ -25,6 +33,18 @@ public class MyWebConfig implements WebMvcConfigurer {
     // 那么应该允许的域名应该配置成huhuiyu.top，或者相对危险的*.huhuiyu.top
     // allowCredentials表示是否需要开启认证
     registry.addMapping("/**").allowedMethods("*").allowedOrigins("*").allowCredentials(false);
+  }
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    // 添加自定义拦截器
+    registry.addInterceptor(myInterceptor);
+    WebMvcConfigurer.super.addInterceptors(registry);
+  }
+
+  @Bean
+  public ServerEndpointExporter endpointExporter() {
+    return new ServerEndpointExporter();
   }
 
 }

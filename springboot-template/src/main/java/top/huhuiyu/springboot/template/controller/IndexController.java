@@ -34,4 +34,12 @@ public class IndexController {
     result.setSuccessInfo("hello " + echo);
     return result;
   }
+
+  @ApiOperation(value = "WebSocket说明", notes = "本接口是websocket说明文档，无需调用")
+  @GetMapping("/websocket")
+  public BaseResult websocket() throws Exception {
+    BaseResult result = new BaseResult();
+    result.setFailInfo("本接口是websocket说明文档，无需调用");
+    return result;
+  }
 }

@@ -34,5 +34,24 @@ const app = new Vue({
         true
       );
     }
+  },
+  created() {
+    let ws = server.ws('echo');
+    ws.onopen = function (ev) {
+      console.log('websocket open', ev);
+    };
+    ws.onclose = function (ev) {
+      console.log('websocket close', ev);
+    };
+    ws.onmessage = function (ev) {
+      console.log('websocket message', ev);
+      let timews = server.ws('timestamp');
+      timews.onopen = function (ev) {
+        timews.send(JSON.stringify({}));
+      };
+    };
+    ws.onerror = function (ev) {
+      console.log('websocket error', ev);
+    };
   }
 });

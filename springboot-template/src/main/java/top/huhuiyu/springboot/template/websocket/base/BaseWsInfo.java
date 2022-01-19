@@ -1,10 +1,10 @@
-package top.huhuiyu.springboot.template.base;
+package top.huhuiyu.springboot.template.websocket.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.huhuiyu.springboot.template.utils.SystemConstants;
+import top.huhuiyu.springboot.template.base.BaseEntity;
 
 /**
  * WebSocket统一应答对象
@@ -18,6 +18,12 @@ import top.huhuiyu.springboot.template.utils.SystemConstants;
 @AllArgsConstructor
 public class BaseWsInfo extends BaseEntity {
   private static final long serialVersionUID = -7452439994480200880L;
+  public static final int SUCCESS_CODE = 200;
+  public static final int FAIL_CODE = 500;
+
+  public static final String TYPE_TIME = "timestamp";
+  public static final String TYPE_ECHO = "echo";
+  public static final String TYPE_CHAT = "chat";
 
   /**
    * 应答是否成功
@@ -50,7 +56,7 @@ public class BaseWsInfo extends BaseEntity {
   }
 
   public static BaseWsInfo getSuccessInfo(Object message) {
-    return getBaseWsInfo(true, SystemConstants.WS_SUCCESS_CODE, message);
+    return getBaseWsInfo(true, SUCCESS_CODE, message);
   }
 
   public static BaseWsInfo getFailInfo(int code, Object message) {
@@ -58,7 +64,7 @@ public class BaseWsInfo extends BaseEntity {
   }
 
   public static BaseWsInfo getFailInfo(Object message) {
-    return getBaseWsInfo(false, SystemConstants.WS_FAIL_CODE, message);
+    return getBaseWsInfo(false, FAIL_CODE, message);
   }
 
 }

@@ -1,13 +1,29 @@
 const SERVER_BASE_URL = 'http://127.0.0.1:20000';
+const WEBSOCKET_BASE_URL = 'ws://127.0.0.1:20000/ws/';
 const SERVER_TOKEN_KEY = 'huhuiyu.server.token';
 const SERVER = {};
+let wsMap = new Map();
 
 SERVER.getServiceUrl = function () {
   return SERVER_BASE_URL;
 };
 
 /**
- *
+ * 获取websocket实例
+ * @param {string} app 应用路径
+ * @returns websocket实例
+ */
+SERVER.ws = function (app) {
+  if (wsMap.has(app)) {
+    return wsMap.get(app);
+  }
+  const socket = new WebSocket(WEBSOCKET_BASE_URL + app);
+  wsMap.set(app, socket);
+  return socket;
+};
+
+/**
+ * ajax请求
  * @param {string} path 请求路径
  * @param {json} params 请求参数
  * @param {function} cb 回调函数，参数为应答结果
