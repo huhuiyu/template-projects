@@ -9,7 +9,7 @@ import top.huhuiyu.springboot.template.service.WebSocketService;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
 import top.huhuiyu.springboot.template.websocket.WebSocket;
 import top.huhuiyu.springboot.template.websocket.base.BaseProcessor;
-import top.huhuiyu.springboot.template.websocket.base.BaseWsInfo;
+import top.huhuiyu.springboot.template.websocket.base.BaseWebSocketResult;
 import top.huhuiyu.springboot.template.websocket.entity.ChatInfo;
 import top.huhuiyu.springboot.template.websocket.util.WebSocketUtil;
 
@@ -27,25 +27,27 @@ public class ChatProcessor implements BaseProcessor {
   public void onOpen(Session session) throws Exception {
     WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
     webSocketService.addSession(session);
+    // 添加到聊天
+    webSocketService.subscription(WebSocket.CHANNEL_CHAT, session);
   }
 
   @Override
   public void onMessage(String message, Session session) throws Exception {
     WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
     webSocketService.addSession(session);
-    BaseWsInfo baseWsInfo;
+    BaseWebSocketResult result;
     try {
       ChatInfo chatInfo = JsonUtil.parse(message, ChatInfo.class);
       log.debug("聊天信息：", chatInfo);
       // 广播到聊天频道
-      baseWsInfo = BaseWsInfo.getSuccessInfo(chatInfo);
+      result = BaseWebSocketResult.getSuccessInfo(chatInfo);
     } catch (Exception ex) {
       // 格式错误应答
-      baseWsInfo = BaseWsInfo.getFailInfo(String.format("错误的信息格式：%s", ex.getMessage()));
-      baseWsInfo.setType(BaseWsInfo.TYPE_CHAT);
+      result = BaseWebSocketResult.getFailInfo(String.format("错误的信息格式：%s", ex.getMessage()));
+      result.setType(WebSocket.TYPE_CHAT);
     }
-    baseWsInfo.setType(BaseWsInfo.TYPE_CHAT);
-    webSocketService.publish(WebSocket.APP_CHAT, baseWsInfo);
+    result.setType(WebSocket.TYPE_CHAT);
+    webSocketService.publish(WebSocket.APP_CHAT, result);
   }
 
 }

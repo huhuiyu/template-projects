@@ -16,14 +16,10 @@ import top.huhuiyu.springboot.template.base.BaseEntity;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseWsInfo extends BaseEntity {
+public class BaseWebSocketResult extends BaseEntity {
   private static final long serialVersionUID = -7452439994480200880L;
   public static final int SUCCESS_CODE = 200;
   public static final int FAIL_CODE = 500;
-
-  public static final String TYPE_TIME = "timestamp";
-  public static final String TYPE_ECHO = "echo";
-  public static final String TYPE_CHAT = "chat";
 
   /**
    * 应答是否成功
@@ -43,27 +39,27 @@ public class BaseWsInfo extends BaseEntity {
    */
   private String type;
 
-  public static BaseWsInfo getBaseWsInfo(Boolean success, int code, Object message) {
-    BaseWsInfo baseWsInfo = new BaseWsInfo();
+  public static BaseWebSocketResult getBaseWsInfo(Boolean success, int code, Object message) {
+    BaseWebSocketResult baseWsInfo = new BaseWebSocketResult();
     baseWsInfo.setCode(code);
     baseWsInfo.setSuccess(success);
     baseWsInfo.setMessage(message);
     return baseWsInfo;
   }
 
-  public static BaseWsInfo getSuccessInfo(int code, Object message) {
+  public static BaseWebSocketResult getSuccessInfo(int code, Object message) {
     return getBaseWsInfo(true, code, message);
   }
 
-  public static BaseWsInfo getSuccessInfo(Object message) {
+  public static BaseWebSocketResult getSuccessInfo(Object message) {
     return getBaseWsInfo(true, SUCCESS_CODE, message);
   }
 
-  public static BaseWsInfo getFailInfo(int code, Object message) {
+  public static BaseWebSocketResult getFailInfo(int code, Object message) {
     return getBaseWsInfo(false, code, message);
   }
 
-  public static BaseWsInfo getFailInfo(Object message) {
+  public static BaseWebSocketResult getFailInfo(Object message) {
     return getBaseWsInfo(false, FAIL_CODE, message);
   }
 

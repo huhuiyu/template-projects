@@ -44,6 +44,30 @@
     </div>
     <div>{{mail}}</div>
 
+    <hr>
+    <div class="row">
+      <div class="col-9">
+        <input class="form-control" type="text" v-model="echo" placeholder="echo">
+      </div>
+      <div class="col-3">
+        <span class="btn btn-primary input-group-text" @click="sendEcho">发送</span>
+      </div>
+    </div>
+    <div>{{echoInfo}}</div>
+
+    <div class="row">
+      <div class="col-5">
+        <input class="form-control" type="text" v-model="chatInfo.name" placeholder="姓名">
+      </div>
+      <div class="col-5">
+        <input class="form-control" type="text" v-model="chatInfo.info" placeholder="消息">
+      </div>
+      <div class="col-2">
+        <span class="btn btn-primary input-group-text" @click="sendChat">发送</span>
+      </div>
+    </div>
+    <div>{{chatResult}}</div>
+
   </div>
 
   <script src="lib/bootstrap.bundle.min.js"></script>

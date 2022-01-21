@@ -43,8 +43,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     sessions.remove(session);
     // 删除订阅消息session
     for (String key : publishes.keySet()) {
-      Set<Session> sessionSet = publishes.get(key);
-      sessionSet.remove(session);
+      unsubscribe(key, session);
     }
   }
 
@@ -62,7 +61,15 @@ public class WebSocketServiceImpl implements WebSocketService {
       publishes.put(channel, new HashSet<Session>());
     }
     publishes.get(channel).add(session);
-    log.debug("publishes:" + publishes.toString());
+    log.debug("subscription:" + publishes.toString());
+  }
+
+  @Override
+  public void unsubscribe(String channel, Session session) {
+    if (publishes.containsKey(channel)) {
+      publishes.get(channel).remove(session);
+    }
+    log.debug("unsubscribe:" + publishes.toString());
   }
 
   @Override

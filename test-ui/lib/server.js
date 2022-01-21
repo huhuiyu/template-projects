@@ -1,3 +1,4 @@
+import AutoWebSocket from './AutoWebSocket.js';
 const SERVER_BASE_URL = 'http://127.0.0.1:20000';
 const WEBSOCKET_BASE_URL = 'ws://127.0.0.1:20000/ws/';
 const SERVER_TOKEN_KEY = 'huhuiyu.server.token';
@@ -17,8 +18,9 @@ SERVER.ws = function (app) {
   if (wsMap.has(app)) {
     return wsMap.get(app);
   }
-  const socket = new WebSocket(WEBSOCKET_BASE_URL + app);
+  const socket = new AutoWebSocket(WEBSOCKET_BASE_URL + app);
   wsMap.set(app, socket);
+  socket.connect();
   return socket;
 };
 

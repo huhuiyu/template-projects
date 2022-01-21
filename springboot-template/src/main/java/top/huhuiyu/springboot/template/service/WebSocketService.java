@@ -68,4 +68,12 @@ public interface WebSocketService {
    * @throws Exception 处理发生错误
    */
   void sendMessage(Session session, String message) throws Exception;
+
+  /**
+   * 取消订阅频道
+   * 
+   * @param channel 频道
+   * @param session 会话
+   */
+  void unsubscribe(String channel, Session session);
 }

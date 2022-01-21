@@ -4,8 +4,9 @@ import javax.websocket.Session;
 
 import top.huhuiyu.springboot.template.service.WebSocketService;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
+import top.huhuiyu.springboot.template.websocket.WebSocket;
 import top.huhuiyu.springboot.template.websocket.base.BaseProcessor;
-import top.huhuiyu.springboot.template.websocket.base.BaseWsInfo;
+import top.huhuiyu.springboot.template.websocket.base.BaseWebSocketResult;
 import top.huhuiyu.springboot.template.websocket.util.WebSocketUtil;
 
 /**
@@ -25,9 +26,9 @@ public class EchoProcessor implements BaseProcessor {
   @Override
   public void onMessage(String message, Session session) throws Exception {
     WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
-    BaseWsInfo baseWsInfo = BaseWsInfo.getSuccessInfo("服务器应答:" + message);
-    baseWsInfo.setType(BaseWsInfo.TYPE_ECHO);
-    webSocketService.sendMessage(session, JsonUtil.stringify(baseWsInfo));
+    BaseWebSocketResult result = BaseWebSocketResult.getSuccessInfo("服务器应答:" + message);
+    result.setType(WebSocket.TYPE_ECHO);
+    webSocketService.sendMessage(session, JsonUtil.stringify(result));
   }
 
 }

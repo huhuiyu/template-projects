@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 
 import top.huhuiyu.springboot.template.dao.UtilDAO;
 import top.huhuiyu.springboot.template.service.WebSocketService;
-import top.huhuiyu.springboot.template.websocket.base.BaseWsInfo;
+import top.huhuiyu.springboot.template.websocket.WebSocket;
+import top.huhuiyu.springboot.template.websocket.base.BaseWebSocketResult;
 
 /**
  * 定时任务
@@ -23,12 +24,12 @@ public class ScheduleTask {
   @Autowired
   private UtilDAO utilDAO;
 
-  @Scheduled(initialDelay = 5 * 1000, fixedDelay = 60 * 1000)
+  @Scheduled(initialDelay = 5 * 1000, fixedDelay = 5 * 60 * 1000)
   public void timestamp() {
     try {
       log.debug("正在广播时间戳");
-      BaseWsInfo baseWsInfo = BaseWsInfo.getSuccessInfo(utilDAO.queryTimestamp());
-      baseWsInfo.setType(BaseWsInfo.TYPE_TIME);
+      BaseWebSocketResult baseWsInfo = BaseWebSocketResult.getSuccessInfo(utilDAO.queryTimestamp());
+      baseWsInfo.setType(WebSocket.TYPE_TIMESTAMP);
       webSocketService.broadcast(baseWsInfo);
     } catch (Exception ex) {
       log.error("广播时间戳", ex);

@@ -1,6 +1,7 @@
 import { server, baseUrl } from '../lib/server.js';
 import Vue from '../lib/vue.esm.min.js';
-
+let ws;
+let wsChat;
 const app = new Vue({
   el: '#app',
   data() {
@@ -13,10 +14,23 @@ const app = new Vue({
         subject: '一个新接口的邮件',
         content: '<h1>序列化发送邮件是否稳定？</h1>'
       },
-      mail: ''
+      mail: '',
+      echo: '',
+      echoInfo: '',
+      chatInfo: {
+        name: '',
+        info: ''
+      },
+      chatResult: ''
     };
   },
   methods: {
+    sendChat() {
+      wsChat.send(app.chatInfo);
+    },
+    sendEcho() {
+      ws.send(app.echo);
+    },
     sendMail() {
       server.ajax('/test/mail', app.mailInfo, function (data) {
         app.mail = data;
@@ -33,25 +47,21 @@ const app = new Vue({
         },
         true
       );
+    },
+    openWs() {
+      ws = server.ws('echo');
+      ws.addListener('message', function (data) {
+        app.echoInfo = data;
+      });
+
+      wsChat = server.ws('chat');
+
+      wsChat.addListener('message', function (data) {
+        app.chatResult = data;
+      });
     }
   },
-  created() {
-    let ws = server.ws('echo');
-    ws.onopen = function (ev) {
-      console.log('websocket open', ev);
-    };
-    ws.onclose = function (ev) {
-      console.log('websocket close', ev);
-    };
-    ws.onmessage = function (ev) {
-      console.log('websocket message', ev);
-      let timews = server.ws('timestamp');
-      timews.onopen = function (ev) {
-        timews.send(JSON.stringify({}));
-      };
-    };
-    ws.onerror = function (ev) {
-      console.log('websocket error', ev);
-    };
+  mounted() {
+    this.openWs();
   }
 });

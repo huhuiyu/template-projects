@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 
 import top.huhuiyu.springboot.template.service.WebSocketService;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
+import top.huhuiyu.springboot.template.websocket.base.BaseParameter;
 import top.huhuiyu.springboot.template.websocket.base.BaseProcessor;
-import top.huhuiyu.springboot.template.websocket.base.BaseWsInfo;
-import top.huhuiyu.springboot.template.websocket.processor.BlankProcessor;
+import top.huhuiyu.springboot.template.websocket.base.BaseWebSocketResult;
 import top.huhuiyu.springboot.template.websocket.processor.ChatProcessor;
 import top.huhuiyu.springboot.template.websocket.processor.EchoProcessor;
 import top.huhuiyu.springboot.template.websocket.util.WebSocketUtil;
@@ -34,15 +34,21 @@ import top.huhuiyu.springboot.template.websocket.util.WebSocketUtil;
 public class WebSocket {
 
   private static final Logger log = LoggerFactory.getLogger(WebSocket.class);
+  // app类型
   public static final String APP_ECHO = "echo";
   public static final String APP_CHAT = "chat";
-  public static final String APP_TIMESTAMP = "timestamp";
+  // 消息类型
+  public static final String TYPE_ECHO = "echo";
+  public static final String TYPE_CHAT = "chat";
+  public static final String TYPE_TIMESTAMP = "timestamp";
+  // 订阅channel类型
+  public static final String CHANNEL_CHAT = "chat";
+
   private static final Map<String, BaseProcessor> PROCESSORM_MAP = new HashMap<>();
 
   public WebSocket() {
     PROCESSORM_MAP.put(APP_CHAT, new ChatProcessor());
     PROCESSORM_MAP.put(APP_ECHO, new EchoProcessor());
-    PROCESSORM_MAP.put(APP_TIMESTAMP, new BlankProcessor());
   }
 
   /**
@@ -54,11 +60,13 @@ public class WebSocket {
   public void onOpen(Session session, @PathParam("app") String app) throws Exception {
     WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
     log.debug("open app is:" + app);
-    if (PROCESSORM_MAP.containsKey(app)) {
-      PROCESSORM_MAP.get(app).onOpen(session);
-    } else {
-      webSocketService.sendMessage(session, JsonUtil.stringify(BaseWsInfo.getFailInfo("无效的请求路径")));
+    // 校验app参数
+    if (!PROCESSORM_MAP.containsKey(app)) {
+      webSocketService.sendMessage(session, JsonUtil.stringify(BaseWebSocketResult.getFailInfo("无效的请求路径")));
+      return;
     }
+    // 调用处理器处理open事件
+    PROCESSORM_MAP.get(app).onOpen(session);
     log.debug("onOpen：" + session.getId());
   }
 
@@ -79,13 +87,29 @@ public class WebSocket {
   @OnMessage
   public void onMessage(String message, Session session, @PathParam("app") String app) throws Exception {
     WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
-    log.debug("message app is:" + app);
-    if (PROCESSORM_MAP.containsKey(app)) {
-      PROCESSORM_MAP.get(app).onMessage(message, session);
-    } else {
-      webSocketService.sendMessage(session, JsonUtil.stringify(BaseWsInfo.getFailInfo("无效的请求路径")));
+    log.debug("message app is:{}", app);
+    log.debug("onMessage：{}", message);
+    // 不存的app路径信息
+    if (!PROCESSORM_MAP.containsKey(app)) {
+      webSocketService.sendMessage(session, JsonUtil.stringify(BaseWebSocketResult.getFailInfo("无效的请求路径")));
+      return;
     }
-    log.debug("onMessage：" + message);
+    Exception jsonError = null;
+    try {
+      // 处理心跳
+      BaseParameter parameter = JsonUtil.parse(message, BaseParameter.class);
+      if (BaseParameter.ACTION_TIMESTAMP.equals(parameter.getAction())) {
+        log.debug("收到时间戳回应消息");
+        return;
+      }
+    } catch (Exception ex) {
+      jsonError = ex;
+    }
+    if (jsonError != null) {
+      log.debug("处理参数发生异常:{}", jsonError.getMessage());
+    }
+    // 继续流程
+    PROCESSORM_MAP.get(app).onMessage(message, session);
   }
 
   /**
