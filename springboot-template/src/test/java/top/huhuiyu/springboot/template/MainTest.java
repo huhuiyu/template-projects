@@ -19,7 +19,7 @@ import top.huhuiyu.springboot.template.base.BaseResult;
  * @author DarkKnight
  *
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MainTest {
 
   private static final Logger log = LoggerFactory.getLogger(MainTest.class);

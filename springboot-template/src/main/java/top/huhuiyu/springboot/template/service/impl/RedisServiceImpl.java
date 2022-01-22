@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
 import top.huhuiyu.springboot.template.entity.SystemConfig;
-import top.huhuiyu.springboot.template.entity.TbAdmin;
+import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.service.RedisService;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
 import top.huhuiyu.springboot.template.utils.SystemConstants;
@@ -66,7 +66,7 @@ public class RedisServiceImpl implements RedisService {
   }
 
   @Override
-  public RedisTokenInfo saveUser(String token, TbAdmin tbAdmin) throws Exception {
+  public RedisTokenInfo saveUser(String token, TbUser tbUser) throws Exception {
     ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
     RedisTokenInfo redisTokenInfo;
     if (stringRedisTemplate.hasKey(token)) {
@@ -78,7 +78,7 @@ public class RedisServiceImpl implements RedisService {
       redisTokenInfo = new RedisTokenInfo();
     }
     // 更新用户信息
-    redisTokenInfo.setTbAdmin(tbAdmin);
+    redisTokenInfo.setTbUser(tbUser);
     return saveTokenInfo(token, redisTokenInfo);
   }
 

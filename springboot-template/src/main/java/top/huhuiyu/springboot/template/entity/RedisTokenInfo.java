@@ -19,5 +19,5 @@ import top.huhuiyu.springboot.template.base.BaseEntity;
 public class RedisTokenInfo extends BaseEntity {
   private static final long serialVersionUID = 7709017633598351261L;
   private String ip;
-  private TbAdmin tbAdmin;
+  private TbUser tbUser;
 }

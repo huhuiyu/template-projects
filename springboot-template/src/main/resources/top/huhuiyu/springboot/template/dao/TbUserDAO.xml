@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.huhuiyu.springboot.template.dao.TbUserDAO">
+
+  <select id="queryAll" resultType="TbUser">
+    select aid,username,password,salt,nickname,access_key,role,enable,lastupdate from tb_user
+    <trim prefix="where" prefixOverrides="and">
+      <if test="tbUser!=null and tbUser.username!=null and tbUser.username!=''.toString()">
+        and username like #{tbUser.username}
+      </if>
+      <if test="tbUser!=null and tbUser.nickname!=null and tbUser.nickname!=''.toString()">
+        and nickname like #{tbUser.nickname}
+      </if>
+      <if test="tbUser!=null and tbUser.enable!=null and tbUser.enable!=''.toString()">
+        and enable = #{tbUser.enable}
+      </if>
+    </trim>
+    order by aid desc
+  </select>
+
+</mapper>

@@ -24,6 +24,9 @@ public class IpUtil {
    */
   public static String getIpAddress() throws Exception {
     ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    if (servletRequestAttributes == null) {
+      return getLocalIp();
+    }
     HttpServletRequest request = servletRequestAttributes.getRequest();
     return getIpAddr(request);
   }
@@ -38,6 +41,9 @@ public class IpUtil {
    * @throws Exception 处理发生异常
    */
   public static String getIpAddr(HttpServletRequest request) throws Exception {
+    if (request == null) {
+      return getLocalIp();
+    }
     String ipAddress = null;
     try {
       ipAddress = request.getHeader("x-forwarded-for");
@@ -70,5 +76,20 @@ public class IpUtil {
       ipAddress = "";
     }
     return ipAddress;
+  }
+
+  /**
+   * 获取本地ip地址
+   * 
+   * @return 本地ip地址
+   */
+  public static String getLocalIp() {
+    InetAddress inet = null;
+    try {
+      inet = InetAddress.getLocalHost();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    }
+    return inet.getHostAddress();
   }
 }

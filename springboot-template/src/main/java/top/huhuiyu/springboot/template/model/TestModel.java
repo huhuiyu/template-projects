@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.huhuiyu.springboot.template.base.BaseEntity;
 import top.huhuiyu.springboot.template.entity.MailInfo;
-import top.huhuiyu.springboot.template.entity.TbAdmin;
+import top.huhuiyu.springboot.template.entity.TbUser;
 
 /**
  * 测试model
@@ -28,7 +28,7 @@ import top.huhuiyu.springboot.template.entity.TbAdmin;
 @ApiModel(value = "测试Model")
 public class TestModel extends BaseEntity {
   private static final long serialVersionUID = -5150604283449799420L;
-  private TbAdmin user;
+  private TbUser user;
   @ApiModelProperty(value = "邮件列表")
   private List<MailInfo> mailList;
 

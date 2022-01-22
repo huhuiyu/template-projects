@@ -1,5 +1,9 @@
 package top.huhuiyu.springboot.template;
 
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import top.huhuiyu.springboot.template.dao.TbAdminDAO;
-import top.huhuiyu.springboot.template.entity.TbAdmin;
+import top.huhuiyu.springboot.template.dao.TbUserDAO;
+import top.huhuiyu.springboot.template.entity.TbUser;
 
 /**
  * mapper功能测试
@@ -18,27 +22,55 @@ import top.huhuiyu.springboot.template.entity.TbAdmin;
  * @author DarkKnight
  *
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MapperTest {
 
   private static final Logger log = LoggerFactory.getLogger(MapperTest.class);
 
   @Autowired
-  private TbAdminDAO tbAdminDAO;
+  private TbUserDAO tbUserDAO;
 
   @Test
-  public void testQueryAdmin() throws Exception {
-    Page<TbAdmin> page = new Page<TbAdmin>(2, 10);
-    TbAdmin admin = new TbAdmin();
-    IPage<TbAdmin> list = tbAdminDAO.queryAll(page, admin);
+  public void testQueryUser() throws Exception {
+    Page<TbUser> page = new Page<TbUser>(1, 2);
+    TbUser user = new TbUser();
+    IPage<TbUser> list = tbUserDAO.queryAll(page, user);
     log.debug("分页信息：{},{},{}", list.getTotal(), list.getPages(), list.getCurrent());
-    log.debug("分页数据：{}", list.getRecords());
-
-    admin.setAccessKey("c89bceb4-161f-4ea7-803a-fcf78803686e");
-    page.setCurrent(10);
-    list = tbAdminDAO.queryAll(page, admin);
+    showUserList(list.getRecords(), "分页数据");
+    page.setSize(1000);
+    user.setUsername(String.format("%%%s%%", "ad"));
+    list = tbUserDAO.queryAll(page, user);
     log.debug("分页信息：{},{},{}", list.getTotal(), list.getPages(), list.getCurrent());
-    log.debug("分页数据：{}", list.getRecords());
-
+    showUserList(list.getRecords(), "条件查询");
   }
+
+  private void showUserList(List<TbUser> list, String info) {
+    log.debug(info);
+    for (TbUser tbUser : list) {
+      log.debug("{}", tbUser);
+    }
+  }
+
+  @Test
+  public void testUserInfo() throws Exception {
+    TbUser user = new TbUser();
+    user.setAccessKey(UUID.randomUUID().toString());
+    user.setNickname("添加测试");
+    user.setPassword("dddd");
+    user.setRole("user");
+    user.setSalt("abc123");
+    user.setUsername("user" + new Random().nextInt());
+    log.debug("添加前用户信息：{}", user);
+    tbUserDAO.insert(user);
+    log.debug("添加后用户信息：{}", user);
+    TbUser check = tbUserDAO.selectById(user.getAid());
+    log.debug("主键查询用户信息：{}", check);
+    check.setNickname("修改昵称" + new Random().nextInt());
+    tbUserDAO.updateById(check);
+    check = tbUserDAO.selectById(user.getAid());
+    log.debug("主键修改后的用户信息：{}", check);
+    int result = tbUserDAO.deleteById(check);
+    log.debug("主键删除用户信息的结果：{}", result);
+  }
+
 }

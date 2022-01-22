@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
-import top.huhuiyu.springboot.template.entity.TbAdmin;
+import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.service.RedisService;
 import top.huhuiyu.springboot.template.utils.IpUtil;
 
@@ -19,7 +19,7 @@ import top.huhuiyu.springboot.template.utils.IpUtil;
  * @author DarkKnight
  *
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RedisTest {
 
   private static final Logger log = LoggerFactory.getLogger(RedisTest.class);
@@ -40,11 +40,11 @@ public class RedisTest {
     log.debug("系统配置：{}", redisService.readSystemConfig());
     String token = redisService.checkToken("f154b74c-780d-48db-b8bb-d7ee660ec9ae");
     redisService.saveIp(token, IpUtil.getIpAddress());
-    TbAdmin tbAdmin = new TbAdmin();
-    tbAdmin.setAid(1);
-    tbAdmin.setUsername("admin");
-    tbAdmin.setNickname("内置管理员");
-    redisService.saveUser(token, tbAdmin);
+    TbUser tbUser = new TbUser();
+    tbUser.setAid(1);
+    tbUser.setUsername("admin");
+    tbUser.setNickname("内置管理员");
+    redisService.saveUser(token, tbUser);
     RedisTokenInfo redisTokenInfo = redisService.readTokenInfo(token);
     log.debug("redis信息：{}", redisTokenInfo);
 
