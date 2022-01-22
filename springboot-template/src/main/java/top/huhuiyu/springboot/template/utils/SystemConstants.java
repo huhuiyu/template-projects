@@ -7,6 +7,10 @@ package top.huhuiyu.springboot.template.utils;
  *
  */
 public interface SystemConstants {
+  /**
+   * 请求头中的token信息key
+   */
+  String TOKEN_KEY = "token";
 
   /**
    * 正常应答代码
@@ -83,4 +87,9 @@ public interface SystemConstants {
    * 系统配置key;
    */
   String SYSTEM_CONFIG_KEY = "springboot_template_system_config";
+
+  /**
+   * 用户名正则
+   */
+  String USERNAME_CHECK = "^[a-zA-Z][a-zA-Z0-9_-]{3,15}$";
 }

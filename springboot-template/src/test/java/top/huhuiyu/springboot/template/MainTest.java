@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.DigestUtils;
 
 import top.huhuiyu.springboot.template.base.BaseResult;
 
@@ -30,7 +31,7 @@ public class MainTest {
   public void lombok() throws Exception {
     BaseResult result1 = new BaseResult(200, "hello", true, "lombok");
     BaseResult result2 = new BaseResult();
-    System.out.println(String.format("%s%n%s", result1, result2));
+    log.debug(String.format("%s%n%s", result1, result2));
   }
 
   @Test
@@ -38,6 +39,13 @@ public class MainTest {
     Scanner scanner = new Scanner(MainTest.class.getResourceAsStream("/test.txt"));
     String info = scanner.next();
     assertEquals("一个资源测试文件", info);
+  }
+
+  @Test
+  public void md5() throws Exception {
+    log.debug("md5加密{}的结果:{}", "admin", DigestUtils.md5DigestAsHex("admin".getBytes()));
+    log.debug("md5加salt的结果:{}", DigestUtils.md5DigestAsHex((DigestUtils.md5DigestAsHex("admin".getBytes()) + "WF5QS7").getBytes()));
+
   }
 
   @Test

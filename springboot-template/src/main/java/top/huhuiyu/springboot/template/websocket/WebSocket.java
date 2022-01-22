@@ -16,13 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import top.huhuiyu.springboot.template.service.WebSocketService;
+import top.huhuiyu.springboot.template.utils.ApplicationUtil;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
 import top.huhuiyu.springboot.template.websocket.base.BaseParameter;
 import top.huhuiyu.springboot.template.websocket.base.BaseProcessor;
 import top.huhuiyu.springboot.template.websocket.base.BaseWebSocketResult;
 import top.huhuiyu.springboot.template.websocket.processor.ChatProcessor;
 import top.huhuiyu.springboot.template.websocket.processor.EchoProcessor;
-import top.huhuiyu.springboot.template.websocket.util.WebSocketUtil;
 
 /**
  * WebSocket监听
@@ -58,7 +58,7 @@ public class WebSocket {
    */
   @OnOpen
   public void onOpen(Session session, @PathParam("app") String app) throws Exception {
-    WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
+    WebSocketService webSocketService = ApplicationUtil.getBean(WebSocketService.class);
     log.debug("open app is:" + app);
     // 校验app参数
     if (!PROCESSORM_MAP.containsKey(app)) {
@@ -75,7 +75,7 @@ public class WebSocket {
    */
   @OnClose
   public void onClose(Session session, @PathParam("app") String app) {
-    WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
+    WebSocketService webSocketService = ApplicationUtil.getBean(WebSocketService.class);
     log.debug("close app is:" + app);
     webSocketService.removeSession(session);
     log.debug("onClose：" + session.getId());
@@ -86,7 +86,7 @@ public class WebSocket {
    */
   @OnMessage
   public void onMessage(String message, Session session, @PathParam("app") String app) throws Exception {
-    WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
+    WebSocketService webSocketService = ApplicationUtil.getBean(WebSocketService.class);
     log.debug("message app is:{}", app);
     log.debug("onMessage：{}", message);
     // 不存的app路径信息

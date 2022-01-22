@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class ControllerLogger extends BaseControllerAop {
+public class ControllerLogger implements BaseControllerAop {
 
   private static final Logger log = LoggerFactory.getLogger(ControllerLogger.class);
 

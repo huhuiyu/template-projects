@@ -1,5 +1,8 @@
 package top.huhuiyu.springboot.template.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -12,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.huhuiyu.springboot.template.base.BaseEntity;
+import top.huhuiyu.springboot.template.utils.SystemConstants;
+import top.huhuiyu.springboot.template.validate.TbUserValidate;
 
 /**
  * tb_user表
@@ -30,8 +35,12 @@ public class TbUser extends BaseEntity {
   @TableId(type = IdType.AUTO)
   @ApiModelProperty(value = "用户编号", example = "100")
   private java.lang.Integer aid;
+  @NotBlank(message = "登录名必须填写", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class })
+  @Pattern(regexp = SystemConstants.USERNAME_CHECK, message = "登录名必须是4-16位长度的字母和数字以及_-的组合，必须是字母开头", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class })
   @ApiModelProperty(value = "登录名", example = "user")
   private java.lang.String username;
+  @NotBlank(message = "密码必须填写", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class })
+  @Pattern(regexp = SystemConstants.MD5_CHECK, message = "密码必须md5加密", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class })
   @ApiModelProperty(value = "密码（需要md5加密）", example = "900150983cd24fb0d6963f7d28e17f72")
   private java.lang.String password;
   @ApiModelProperty(hidden = true)

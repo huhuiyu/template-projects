@@ -6,7 +6,7 @@
 <mapper namespace="top.huhuiyu.springboot.template.dao.TbUserDAO">
 
   <select id="queryAll" resultType="TbUser">
-    select aid,username,password,salt,nickname,access_key,role,enable,lastupdate from tb_user
+    select aid,username,'********' as 'password','*****' as 'salt',nickname,access_key,role,enable,lastupdate from tb_user
     <trim prefix="where" prefixOverrides="and">
       <if test="tbUser!=null and tbUser.username!=null and tbUser.username!=''.toString()">
         and username like #{tbUser.username}

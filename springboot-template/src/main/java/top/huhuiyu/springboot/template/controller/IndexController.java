@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import top.huhuiyu.springboot.template.aop.AnnoNoToken;
 import top.huhuiyu.springboot.template.base.BaseResult;
 
 /**
@@ -24,6 +25,7 @@ public class IndexController {
 
   private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
+  @AnnoNoToken
   @ApiOperation(value = "回声测试", notes = "参数通过应答message返回")
   @ApiImplicitParams({ @ApiImplicitParam(name = "echo", value = "回声参数") })
   @GetMapping("")
@@ -35,6 +37,7 @@ public class IndexController {
     return result;
   }
 
+  @AnnoNoToken
   @ApiOperation(value = "WebSocket说明", notes = "本接口是websocket说明文档，无需调用")
   @GetMapping("/websocket")
   public BaseResult websocket() throws Exception {

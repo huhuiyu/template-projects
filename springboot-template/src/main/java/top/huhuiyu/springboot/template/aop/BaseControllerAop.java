@@ -8,10 +8,10 @@ import org.aspectj.lang.annotation.Pointcut;
  * @author DarkKnight
  *
  */
-public abstract class BaseControllerAop {
+public interface BaseControllerAop {
 
   @Pointcut("execution(public * top.huhuiyu.springboot.template.controller..*.*(..))")
-  public void controller() {
+  default void controller() {
   }
 
 }

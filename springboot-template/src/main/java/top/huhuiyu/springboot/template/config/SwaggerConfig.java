@@ -18,6 +18,7 @@ import springfox.documentation.service.ParameterType;
 import springfox.documentation.service.RequestParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import top.huhuiyu.springboot.template.utils.SystemConstants;
 
 /**
  * swagger配置
@@ -36,13 +37,15 @@ public class SwaggerConfig {
   }
 
   private ApiInfo apiInfo() {
+    // api描述信息
     return new ApiInfoBuilder().contact(new Contact("胡辉煜", "https://huhuiyu.top", "1069306849@qq.com")).title("springboot模板项目").description("springboot模板项目").version("1.0.0").build();
   }
 
   private List<RequestParameter> getGlobalRequestParameters() {
+    // 全局token参数
     List<RequestParameter> parameters = new ArrayList<>();
-    parameters.add(
-        new RequestParameterBuilder().name("token").description("token令牌").required(false).in(ParameterType.HEADER).query(q -> q.model(m -> m.scalarModel(ScalarType.STRING))).required(false).build());
+    parameters.add(new RequestParameterBuilder().name(SystemConstants.TOKEN_KEY).description("token令牌").required(false).in(ParameterType.HEADER)
+        .query(q -> q.model(m -> m.scalarModel(ScalarType.STRING))).required(false).build());
     return parameters;
   }
 

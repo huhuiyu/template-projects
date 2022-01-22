@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import top.huhuiyu.springboot.template.aop.AnnoNoToken;
 import top.huhuiyu.springboot.template.dao.UtilDAO;
 import top.huhuiyu.springboot.template.entity.MailInfo;
 import top.huhuiyu.springboot.template.message.TestMessage;
@@ -28,6 +29,7 @@ import top.huhuiyu.springboot.template.validate.MailInfoValidate;
  */
 @RestController
 @RequestMapping("/test")
+@AnnoNoToken
 @Api(tags = "测试接口")
 public class TestController {
 
@@ -37,7 +39,7 @@ public class TestController {
   private MailService mailService;
   @Autowired
   private UtilDAO utilDAO;
-
+  
   @ApiOperation(value = "lombok字段", notes = "lombok字段功能测试")
   @ApiImplicitParams({ @ApiImplicitParam(name = "info", value = "测试info字段参数") })
   @PostMapping("/lombok")
@@ -59,6 +61,7 @@ public class TestController {
     return result;
   }
 
+  @AnnoNoToken
   @ApiOperation(value = "JSON校验", notes = "测试JSON校验，只有收件人邮箱必须填写")
   @PostMapping("/validateJson")
   public TestMessage validateJson(@RequestBody @Validated(value = { MailInfoValidate.Demo.class }) MailInfo mainInfo) throws Exception {

@@ -1,4 +1,4 @@
-package top.huhuiyu.springboot.template.websocket.util;
+package top.huhuiyu.springboot.template.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,14 +8,14 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * websocket工具
+ * spring容器上下文工具
  * 
  * @author DarkKnight
  */
 @Component
-public class WebSocketUtil implements ApplicationContextAware {
+public class ApplicationUtil implements ApplicationContextAware {
 
-  private static final Logger log = LoggerFactory.getLogger(WebSocketUtil.class);
+  private static final Logger log = LoggerFactory.getLogger(ApplicationUtil.class);
 
   private static ApplicationContext applicationContext;
 
@@ -35,8 +35,8 @@ public class WebSocketUtil implements ApplicationContextAware {
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     log.debug("设置应用程序上下文：{}", applicationContext);
-    if (WebSocketUtil.applicationContext == null) {
-      WebSocketUtil.applicationContext = applicationContext;
+    if (ApplicationUtil.applicationContext == null) {
+      ApplicationUtil.applicationContext = applicationContext;
     }
   }
 

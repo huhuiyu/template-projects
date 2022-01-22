@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import top.huhuiyu.springboot.template.service.WebSocketService;
+import top.huhuiyu.springboot.template.utils.ApplicationUtil;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
 import top.huhuiyu.springboot.template.websocket.WebSocket;
 import top.huhuiyu.springboot.template.websocket.base.BaseProcessor;
 import top.huhuiyu.springboot.template.websocket.base.BaseWebSocketResult;
 import top.huhuiyu.springboot.template.websocket.entity.ChatInfo;
-import top.huhuiyu.springboot.template.websocket.util.WebSocketUtil;
 
 /**
  * 聊天室处理器
@@ -25,7 +25,7 @@ public class ChatProcessor implements BaseProcessor {
 
   @Override
   public void onOpen(Session session) throws Exception {
-    WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
+    WebSocketService webSocketService = ApplicationUtil.getBean(WebSocketService.class);
     webSocketService.addSession(session);
     // 添加到聊天
     webSocketService.subscription(WebSocket.CHANNEL_CHAT, session);
@@ -33,7 +33,7 @@ public class ChatProcessor implements BaseProcessor {
 
   @Override
   public void onMessage(String message, Session session) throws Exception {
-    WebSocketService webSocketService = WebSocketUtil.getBean(WebSocketService.class);
+    WebSocketService webSocketService = ApplicationUtil.getBean(WebSocketService.class);
     webSocketService.addSession(session);
     BaseWebSocketResult result;
     try {

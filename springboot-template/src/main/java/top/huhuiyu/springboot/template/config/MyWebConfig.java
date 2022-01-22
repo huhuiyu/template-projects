@@ -44,6 +44,7 @@ public class MyWebConfig implements WebMvcConfigurer {
 
   @Bean
   public ServerEndpointExporter endpointExporter() {
+    // 设置WebSocket节点
     return new ServerEndpointExporter();
   }
 

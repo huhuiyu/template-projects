@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -71,6 +72,10 @@ public class MapperTest {
     log.debug("主键修改后的用户信息：{}", check);
     int result = tbUserDAO.deleteById(check);
     log.debug("主键删除用户信息的结果：{}", result);
+    QueryWrapper<TbUser> wrapper = new QueryWrapper<>();
+    wrapper.eq("username", "admin");
+    check = tbUserDAO.selectOne(wrapper);
+    log.debug("单值查询结果：{}", check);
   }
 
 }
