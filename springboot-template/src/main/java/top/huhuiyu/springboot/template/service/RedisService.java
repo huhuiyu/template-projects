@@ -67,4 +67,13 @@ public interface RedisService {
    */
   SystemConfig readSystemConfig() throws Exception;
 
+  /**
+   * 清除token中的用户信息
+   * 
+   * @param token token信息
+   * 
+   * @throws Exception 处理发生异常
+   */
+  void removeUser(String token) throws Exception;
+
 }

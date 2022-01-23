@@ -22,4 +22,22 @@ public interface TbUserService {
    */
   TbUserMessage login(TbUser user) throws Exception;
 
+  /**
+   * 用户登出
+   * 
+   * @return 用户登出结果
+   * 
+   * @throws Exception 处理发生异常
+   */
+  TbUserMessage logout() throws Exception;
+
+  /**
+   * 获取登录用户信息
+   * 
+   * @return 登录用户信息
+   * 
+   * @throws Exception 处理发生异常
+   */
+  TbUserMessage getUserInfo() throws Exception;
+
 }

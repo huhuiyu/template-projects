@@ -33,4 +33,16 @@ public class UserAuthController {
     return tbUserService.login(user);
   }
 
+  @ApiOperation(value = "用户登出", notes = "用户登出，需要token信息")
+  @PostMapping("/logout")
+  public TbUserMessage logout() throws Exception {
+    return tbUserService.logout();
+  }
+
+  @ApiOperation(value = "获取登录用户信息", notes = "获取登录用户信息，需要token信息，没有登录success为false")
+  @PostMapping("/getUserInfo")
+  public TbUserMessage getUserInfo() throws Exception {
+    return tbUserService.getUserInfo();
+  }
+
 }

@@ -82,6 +82,19 @@ public class RedisServiceImpl implements RedisService {
     return saveTokenInfo(token, redisTokenInfo);
   }
 
+  @Override
+  public void removeUser(String token) throws Exception {
+    ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+    RedisTokenInfo redisTokenInfo;
+    if (stringRedisTemplate.hasKey(token)) {
+      // token存在就直接获取
+      redisTokenInfo = JsonUtil.parse(valueOperations.get(token), RedisTokenInfo.class);
+      // 清除用户信息
+      redisTokenInfo.setTbUser(null);
+      saveTokenInfo(token, redisTokenInfo);
+    }
+  }
+
   /**
    * 保存token信息
    * 
@@ -99,6 +112,7 @@ public class RedisServiceImpl implements RedisService {
     return redisTokenInfo;
   }
 
+  @Override
   public String checkToken(String token) throws Exception {
     token = StringUtils.hasText(token) ? token : "";
     ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();

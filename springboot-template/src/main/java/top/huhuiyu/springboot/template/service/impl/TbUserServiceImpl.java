@@ -73,4 +73,23 @@ public class TbUserServiceImpl implements TbUserService {
     return message;
   }
 
+  @Override
+  public TbUserMessage logout() throws Exception {
+    TbUserMessage message = new TbUserMessage();
+    AuthInfo authInfo = ApplicationUtil.getBean(AuthInfo.class);
+    redisService.removeUser(authInfo.getToken());
+    message.setSuccessInfo("安全退出成功");
+    return message;
+  }
+
+  @Override
+  public TbUserMessage getUserInfo() throws Exception {
+    TbUserMessage message = new TbUserMessage();
+    AuthInfo authInfo = ApplicationUtil.getBean(AuthInfo.class);
+    message.setTbUser(authInfo.getLoginUser());
+    message.setMessage("");
+    message.setSuccess(authInfo.getLoginUser() != null);
+    return message;
+  }
+
 }
