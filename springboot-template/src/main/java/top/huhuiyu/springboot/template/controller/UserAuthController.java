@@ -3,11 +3,12 @@ package top.huhuiyu.springboot.template.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.message.TbUserMessage;
@@ -27,9 +28,10 @@ public class UserAuthController {
   @Autowired
   private TbUserService tbUserService;
 
-  @ApiOperation(value = "用户登录", notes = "用户登录，需要token信息，用户名，md加密后的密码")
+  @ApiOperation(value = "用户登录", notes = "用户登录，需要token信息")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "username", value = "登录名", required = true), @ApiImplicitParam(name = "password", value = "登录密码，需要md5加密", required = true) })
   @PostMapping("/login")
-  public TbUserMessage login(@Validated(TbUserValidate.Auth.class) @RequestBody TbUser user) throws Exception {
+  public TbUserMessage login(@Validated(TbUserValidate.Auth.class) TbUser user) throws Exception {
     return tbUserService.login(user);
   }
 

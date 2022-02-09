@@ -92,4 +92,27 @@ public interface SystemConstants {
    * 用户名正则
    */
   String USERNAME_CHECK = "^[a-zA-Z][a-zA-Z0-9_-]{3,15}$";
+
+  /**
+   * 默认分页大小
+   */
+  long PAGE_SIZE = 10l;
+  /**
+   * 最大分页限制
+   */
+  long PAGE_SIZE_MAX = 1000l;
+  /**
+   * 最小分页限制
+   */
+  long PAGE_SIZE_MIN = 1l;
+  /**
+   * 最小页面限制
+   */
+  long PAGE_NUMBER_MIN = 1l;
+
+  /**
+   * like查询模板
+   */
+  String LIKE_INFO = "%%%s%%";
+
 }

@@ -80,7 +80,7 @@ dependencies {
   implementation group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '3.0.3'
   
   // springboot开发工具，可以热部署代码（部署时可以去掉）
-  implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+  developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools'
   
   // lombok工具
   compileOnly 'org.projectlombok:lombok:1.18.22'

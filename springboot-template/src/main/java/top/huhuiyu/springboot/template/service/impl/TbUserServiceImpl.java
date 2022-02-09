@@ -4,16 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import top.huhuiyu.springboot.template.dao.TbUserDAO;
 import top.huhuiyu.springboot.template.entity.AuthInfo;
+import top.huhuiyu.springboot.template.entity.PageBean;
 import top.huhuiyu.springboot.template.entity.TbUser;
+import top.huhuiyu.springboot.template.message.TbUserManageMessage;
 import top.huhuiyu.springboot.template.message.TbUserMessage;
 import top.huhuiyu.springboot.template.service.RedisService;
 import top.huhuiyu.springboot.template.service.TbUserService;
 import top.huhuiyu.springboot.template.utils.ApplicationUtil;
+import top.huhuiyu.springboot.template.utils.SystemConstants;
 
 /**
  * 用户信息服务实现
@@ -89,6 +95,31 @@ public class TbUserServiceImpl implements TbUserService {
     message.setTbUser(authInfo.getLoginUser());
     message.setMessage("");
     message.setSuccess(authInfo.getLoginUser() != null);
+    return message;
+  }
+
+  @Override
+  public TbUserManageMessage query(PageBean pageBean, TbUser user) throws Exception {
+    // 处理分页信息
+    if (pageBean == null) {
+      pageBean = new PageBean();
+    }
+    IPage<TbUser> page = new Page<TbUser>();
+    pageBean.toIPage(page);
+    // 处理参数
+    if (user != null && StringUtils.hasText(user.getUsername())) {
+      user.setUsername(String.format(SystemConstants.LIKE_INFO, user.getUsername()));
+    }
+    if (user != null && StringUtils.hasText(user.getNickname())) {
+      user.setNickname(String.format(SystemConstants.LIKE_INFO, user.getNickname()));
+    }
+    // 分页查询
+    page = tbUserDAO.queryAll(page, user);
+    // 应答消息
+    TbUserManageMessage message = new TbUserManageMessage();
+    message.setPage(pageBean.fromIPage(page));
+    message.setList(page.getRecords());
+    message.setSuccessInfo("");
     return message;
   }
 

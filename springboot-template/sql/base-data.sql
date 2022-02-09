@@ -12,7 +12,7 @@ insert into tb_role(role_name,role_group,role_info) values('app-admin','admin','
 -- 用户表=========================================================
 truncate table tb_user;
 
--- 默认管理员数据,密码是admin_pwd,809fb6b4ae6ba5cba3762e2bd939aaa2
+-- 默认管理员数据,密码是admin_pwd,4dc6dceeb03a1e683d7dc66c240243cd
 insert into tb_user(username,password,salt,nickname,role,access_key) values('admin','d48dc3be25a60dafc4db503fbc36d397','JX1XRO','内置管理员','admin','ba26b9ea-9c3d-4ffb-bde5-4bee8ba571c3');
 -- 默认用户数据，密码是user-pwd,b1493a406bdbfbca2511de3619a71055
 insert into tb_user(username,password,salt,nickname,role,access_key) values('user','ffd3935816d6bb5b4a64a3d0f8c61cf1','C3CJXR','内置用户','user','76cb360d-256b-4660-8e13-ab4e3ae9f874');

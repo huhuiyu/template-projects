@@ -33,7 +33,7 @@ public class MapperTest {
 
   @Test
   public void testQueryUser() throws Exception {
-    Page<TbUser> page = new Page<TbUser>(1, 2);
+    IPage<TbUser> page = new Page<TbUser>(1, 2);
     TbUser user = new TbUser();
     IPage<TbUser> list = tbUserDAO.queryAll(page, user);
     log.debug("分页信息：{},{},{}", list.getTotal(), list.getPages(), list.getCurrent());
