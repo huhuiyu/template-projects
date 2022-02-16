@@ -8,7 +8,6 @@ insert into tb_role(role_name,role_group,role_info) values('admin','admin','可�
 insert into tb_role(role_name,role_group,role_info) values('user','user','标准用户');
 insert into tb_role(role_name,role_group,role_info) values('app-admin','admin','应用管理员');
 
-
 -- 用户表=========================================================
 truncate table tb_user;
 
@@ -18,3 +17,8 @@ insert into tb_user(username,password,salt,nickname,role,access_key) values('adm
 insert into tb_user(username,password,salt,nickname,role,access_key) values('user','ffd3935816d6bb5b4a64a3d0f8c61cf1','C3CJXR','内置用户','user','76cb360d-256b-4660-8e13-ab4e3ae9f874');
 --  默认应用管理员数据,密码是admin,21232f297a57a5a743894a0e4a801fc3
 insert into tb_user(username,password,salt,nickname,role,access_key) values('app-admin','3f7e7f18f394e570dbfe0912b1d69123','WF5QS7','内置应用管理员','app-admin','10875236-27c6-40d7-aaea-876fba9489dd');
+
+-- 接口信息表=========================================================
+truncate table tb_actions;
+
+insert into tb_actions(url,info,role) values('/admin/user/query','查询用户列表','admin');

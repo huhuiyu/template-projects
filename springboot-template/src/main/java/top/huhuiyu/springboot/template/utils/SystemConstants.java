@@ -7,6 +7,16 @@ package top.huhuiyu.springboot.template.utils;
  *
  */
 public interface SystemConstants {
+
+  /**
+   * 权限错误代码
+   */
+  int NEED_AUTH_CODE = 1000;
+  /**
+   * 权限错误代码
+   */
+  String NEED_AUTH_MESSAGE = "需要相关角色登录";
+
   /**
    * 请求头中的token信息key
    */

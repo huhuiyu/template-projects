@@ -62,7 +62,7 @@ public class TbUser extends BaseEntity {
   @ApiModelProperty(value = "是否启用（y/n）", example = "y")
   @ApiParam(hidden = true)
   private java.lang.String enable;
-  @TableField(updateStrategy = FieldStrategy.NEVER)
+  @TableField(updateStrategy = FieldStrategy.NEVER, insertStrategy = FieldStrategy.NEVER)
   @ApiModelProperty(value = "信息最后修改时间")
   @ApiParam(hidden = true)
   private java.util.Date lastupdate;

@@ -1,5 +1,9 @@
 package top.huhuiyu.springboot.template.aop;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,7 +22,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import top.huhuiyu.springboot.template.base.BaseResult;
 import top.huhuiyu.springboot.template.entity.AuthInfo;
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
+import top.huhuiyu.springboot.template.entity.TbActions;
+import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.service.RedisService;
+import top.huhuiyu.springboot.template.service.TbActionsService;
 import top.huhuiyu.springboot.template.utils.ApplicationUtil;
 import top.huhuiyu.springboot.template.utils.IpUtil;
 import top.huhuiyu.springboot.template.utils.SystemConstants;
@@ -35,6 +42,8 @@ public class ControllerToken implements BaseControllerAop {
   private static final Logger log = LoggerFactory.getLogger(ControllerToken.class);
   @Autowired
   private RedisService redisService;
+  @Autowired
+  private TbActionsService tbActionsService;
 
   @Around("controller()")
   public Object around(ProceedingJoinPoint pjp) throws Throwable {
@@ -44,6 +53,12 @@ public class ControllerToken implements BaseControllerAop {
     // token存在就保存ip地址信息并更新token相关信息
     if (StringUtils.hasText(token)) {
       processAuthInfo(token);
+    }
+    // 处理接口权限信息 =====================================================
+    boolean checkResult = checkActionInfo();
+    // 有返回值表示校验没用通过
+    if (!checkResult) {
+      throw new AppException(SystemConstants.NEED_AUTH_CODE, SystemConstants.NEED_AUTH_MESSAGE, token);
     }
     // 执行控制器方法 =======================================================
     Object result = pjp.proceed();
@@ -103,4 +118,60 @@ public class ControllerToken implements BaseControllerAop {
     authInfo.setLoginUser(redisTokenInfo.getTbUser());
     authInfo.setIp(redisTokenInfo.getIp());
   }
+
+  /**
+   * 检查url的访问权限
+   * 
+   * @return 是否通过了权限检测
+   * 
+   * @throws Exception 处理发生错误
+   */
+  private boolean checkActionInfo() throws Exception {
+    // 处理路径信息 =======================================================
+    RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+    ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+    HttpServletRequest request = sra.getRequest();
+    TbActions tbActions = new TbActions();
+    tbActions.setUrl(request.getRequestURI().replaceFirst(request.getContextPath(), ""));
+    log.debug("应用路径：{}，请求action：{}", request.getContextPath(), tbActions.getUrl());
+    // 查询数据库中的信息
+    tbActions = tbActionsService.queryByUrl(tbActions);
+    // 地址信息不存在就表示不受权限管理
+    if (tbActions == null) {
+      return true;
+    }
+    // url的权限列表
+    List<String> roles = getRoles(tbActions.getRole());
+    List<String> check = new ArrayList<>();
+    check.addAll(roles);
+    log.debug("接口详细信息：{},权限集合：{}", tbActions, check);
+    // 获取当前用户权限信息
+    AuthInfo authInfo = ApplicationUtil.getBean(AuthInfo.class);
+    // 登陆用户的权限列表
+    List<String> userRoles = new ArrayList<>();
+    TbUser user = authInfo.getLoginUser();
+    if (user != null && StringUtils.hasText(user.getRole())) {
+      userRoles = getRoles(user.getRole());
+    }
+    check.retainAll(userRoles);
+    log.debug("用户信息：{},权限集合：{}，结果权限集合：{}", user, userRoles, check);
+    // 不为空就表示权限吻合
+    if (!check.isEmpty()) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * 转换角色信息为集合
+   * 
+   * @param role 角色信息
+   * 
+   * @return 角色集合
+   */
+  private List<String> getRoles(String role) {
+    List<String> roles = new ArrayList<>(Arrays.asList(role.split(",")));
+    return roles;
+  }
+
 }
