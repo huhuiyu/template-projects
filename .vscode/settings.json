@@ -14,7 +14,8 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/node_modules": true,
-    "**/dist": true
+    "**/dist": true,
+    "**/logs": true
   },
   // 文件排除
   "files.exclude": {
@@ -31,6 +32,7 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/node_modules": true,
-    "**/dist": true
+    "**/dist": true,
+    "**/logs": true
   }
 }
