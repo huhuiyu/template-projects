@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.huhuiyu.springboot.template.dao.TbUserDAO;
 import top.huhuiyu.springboot.template.entity.AuthInfo;
 import top.huhuiyu.springboot.template.entity.PageBean;
+import top.huhuiyu.springboot.template.entity.SystemConfig;
 import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.message.TbUserManageMessage;
 import top.huhuiyu.springboot.template.message.TbUserMessage;
@@ -53,6 +54,7 @@ public class TbUserServiceImpl implements TbUserService {
 
   @Override
   public TbUserMessage login(TbUser user) throws Exception {
+    SystemConfig systemConfig = redisService.readSystemConfig();
     TbUserMessage message = new TbUserMessage();
     // 按照用户名查询
     QueryWrapper<TbUser> wrapper = new QueryWrapper<TbUser>();
@@ -62,9 +64,19 @@ public class TbUserServiceImpl implements TbUserService {
       message.setFailInfo("用户不存在");
       return message;
     }
+    // 用户错误次数限制
+    String userkey = String.format(SystemConstants.PASSWORD_ERROR_KEY, check.getAid());
+    Integer userCount = redisService.loadInfo(userkey, Integer.class);
+    userCount = userCount == null ? 0 : userCount;
+    if (userCount >= systemConfig.getLoginPasswordErrorLimit()) {
+      message.setFailInfo(SystemConstants.PASSWORD_ERROR_INFO);
+      return message;
+    }
     // 校验密码
     String pwd = DigestUtils.md5DigestAsHex((user.getPassword() + check.getSalt()).getBytes());
     if (!check.getPassword().equals(pwd)) {
+      // 记录错误次数
+      redisService.saveInfo(userkey, userCount + 1, systemConfig.getLoginPasswordErrorTimeout());
       message.setFailInfo("密码不正确");
       return message;
     }

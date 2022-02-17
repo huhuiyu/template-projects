@@ -9,10 +9,12 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import top.huhuiyu.springboot.template.aop.AppException;
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
 import top.huhuiyu.springboot.template.entity.SystemConfig;
 import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.service.RedisService;
+import top.huhuiyu.springboot.template.utils.IpUtil;
 import top.huhuiyu.springboot.template.utils.JsonUtil;
 import top.huhuiyu.springboot.template.utils.SystemConstants;
 
@@ -27,6 +29,25 @@ public class RedisServiceImpl implements RedisService {
 
   @Autowired
   private StringRedisTemplate stringRedisTemplate;
+
+  @Override
+  public <T> void saveInfo(String key, T value, Integer timeout) throws Exception {
+    ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+    valueOperations.set(key, JsonUtil.stringify(value), timeout, TimeUnit.SECONDS);
+  }
+
+  @Override
+  public <T> void saveInfo(String key, T value) throws Exception {
+    ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+    valueOperations.set(key, JsonUtil.stringify(value));
+  }
+
+  @Override
+  public <T> T loadInfo(String key, Class<T> clazz) throws Exception {
+    ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+    String info = valueOperations.get(key);
+    return info == null ? null : JsonUtil.parse(info, clazz);
+  }
 
   @Override
   public SystemConfig readSystemConfig() throws Exception {
@@ -114,11 +135,20 @@ public class RedisServiceImpl implements RedisService {
 
   @Override
   public String checkToken(String token) throws Exception {
+    SystemConfig config = readSystemConfig();
     token = StringUtils.hasText(token) ? token : "";
     ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
     if (stringRedisTemplate.hasKey(token)) {
       return token;
     }
+    // 同一个ip新建token次数限制
+    String ipTokenKey = String.format(SystemConstants.IP_TOKEN_ERROR_KEY, IpUtil.getIpAddress());
+    Integer ipTokenCount = this.loadInfo(ipTokenKey, Integer.class);
+    ipTokenCount = ipTokenCount == null ? 0 : ipTokenCount;
+    if (ipTokenCount >= config.getIpMaxTokenCount()) {
+      throw new AppException(SystemConstants.IP_TOKEN_ERROR_INFO);
+    }
+    this.saveInfo(ipTokenKey, ipTokenCount + 1, config.getIpBanTimeout());
     // token不存在就新建
     token = UUID.randomUUID().toString();
     RedisTokenInfo redisTokenInfo = new RedisTokenInfo();

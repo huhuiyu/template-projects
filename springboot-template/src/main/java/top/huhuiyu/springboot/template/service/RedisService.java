@@ -76,4 +76,40 @@ public interface RedisService {
    */
   void removeUser(String token) throws Exception;
 
+  /**
+   * 读取信息
+   * 
+   * @param <T>   泛型参数
+   * @param key   信息的key
+   * @param clazz 信息的类型
+   * 
+   * @return key对应的信息
+   * 
+   * @throws Exception 读取发生错误
+   */
+  <T> T loadInfo(String key, Class<T> clazz) throws Exception;
+
+  /**
+   * 保存信息
+   * 
+   * @param <T>   泛型参数
+   * @param key   信息的key
+   * @param value 信息的值
+   * 
+   * @throws Exception 保存发生错误
+   */
+  <T> void saveInfo(String key, T value) throws Exception;
+
+  /**
+   * 保存信息
+   * 
+   * @param <T>     泛型参数
+   * @param key     信息的key
+   * @param value   信息的值
+   * @param timeout 信息超市秒数
+   * 
+   * @throws Exception 保存发生错误
+   */
+  <T> void saveInfo(String key, T value, Integer timeout) throws Exception;
+
 }

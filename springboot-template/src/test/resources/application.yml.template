@@ -17,7 +17,7 @@ spring:
   redis:
     host: redis服务器地址
     port: 端口
-    password: 密码
+    password: ENC(加密密码)
     # lettuce
     lettuce:
       pool:
@@ -37,7 +37,7 @@ spring:
     host: smtp.qiye.aliyun.com
     port: 465
     protocol: smtps
-    password: 邮箱密码
+    password: ENC(加密邮箱密码)
     default-encoding: UTF-8
   # 域配置，用于区分应用
   jmx:
@@ -67,8 +67,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://数据库服务器地址:3306/数据库名称?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2b8
-    username: 数据库用户名
-    password: 数据库密码
+    username: ENC(加密数据库用户名)
+    password: ENC(加密数据库密码)
     hikari:
       connection-test-query: select 1
       max-lifetime: 60000

@@ -125,4 +125,21 @@ public interface SystemConstants {
    */
   String LIKE_INFO = "%%%s%%";
 
+  /**
+   * 密码错误信息保存key模板
+   */
+  String PASSWORD_ERROR_KEY = "password_error_%s";
+  /**
+   * 密码错误限制信息
+   */
+  String PASSWORD_ERROR_INFO = "密码错误超过次数，登录将会被限制一段时间";
+  /**
+   * token错误信息保存key模板
+   */
+  String IP_TOKEN_ERROR_KEY = "ip_token_error_%s";
+  /**
+   * token错误限制信息
+   */
+  String IP_TOKEN_ERROR_INFO = "刷新token超过次数，请求将会被限制一段时间";
+
 }

@@ -35,11 +35,11 @@ public class SystemConfig extends BaseEntity {
   /**
    * 同一个ip最大新token数量限制
    */
-  private Integer ipMaxTokenCount = 50;
+  private Integer ipMaxTokenCount = 10;
   /**
    * ip锁定时间（秒）
    */
-  private Integer ipBanTimeount = 60;
+  private Integer ipBanTimeout = 60;
   /**
    * 文件上传路径
    */
@@ -49,7 +49,7 @@ public class SystemConfig extends BaseEntity {
    */
   private Integer loginPasswordErrorLimit = 10;
   /**
-   * ip锁定时间（秒）
+   * 密码错误锁定时间（秒）
    */
   private Integer loginPasswordErrorTimeout = 60;
 }

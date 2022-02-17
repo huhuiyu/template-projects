@@ -24,4 +24,5 @@
 
 - 后端项目说明
   - 为了安全没有提供`application.yml`，但是在测试文件夹里面提供了`application.yml.template`配置模板文件
+  - 配置文件中ENC(加密密码)可以用MainTest中的加解密测试生成
 - [springboot模板项目](/springboot-template/)
