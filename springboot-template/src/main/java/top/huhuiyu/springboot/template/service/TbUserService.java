@@ -54,4 +54,38 @@ public interface TbUserService {
    */
   TbUserManageMessage query(PageBean pageBean, TbUser user) throws Exception;
 
+  /**
+   * 修改用户启用状态
+   * 
+   * @param user   用户信息
+   * @param enable 是否启用
+   * 
+   * @return 修改用户启用状态的结果
+   * 
+   * @throws Exception 处理发生异常
+   */
+  TbUserMessage updateEnable(TbUser user, boolean enable) throws Exception;
+
+  /**
+   * 用户注册
+   * 
+   * @param user 用户信息
+   * 
+   * @return 用户注册的结果
+   * 
+   * @throws Exception 处理发生异常
+   */
+  TbUserMessage reg(TbUser user) throws Exception;
+
+  /**
+   * 修改密码
+   * 
+   * @param user 用户信息
+   * 
+   * @return 修改密码的结果
+   * 
+   * @throws Exception 处理发生异常
+   */
+  TbUserMessage updatePwd(TbUser user) throws Exception;
+
 }

@@ -21,4 +21,10 @@ insert into tb_user(username,password,salt,nickname,role,access_key) values('app
 -- 接口信息表=========================================================
 truncate table tb_actions;
 
-insert into tb_actions(url,info,role) values('/admin/user/query','查询用户列表','admin');
+-- 用户管理
+insert into tb_actions(url,info,role) values('/admin/user/query','用户管理-查询用户列表','admin');
+insert into tb_actions(url,info,role) values('/admin/user/enableUser','用户管理-启用用户','admin');
+insert into tb_actions(url,info,role) values('/admin/user/disableUser','用户管理-禁用用户','admin');
+
+-- 用户信息
+insert into tb_actions(url,info,role) values('/user/auth/updatePwd','用户管理-禁用用户','user');

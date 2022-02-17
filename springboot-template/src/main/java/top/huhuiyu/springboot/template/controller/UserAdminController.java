@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import top.huhuiyu.springboot.template.entity.PageBean;
 import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.message.TbUserManageMessage;
+import top.huhuiyu.springboot.template.message.TbUserMessage;
 import top.huhuiyu.springboot.template.service.TbUserService;
 
 @RestController
@@ -27,6 +28,20 @@ public class UserAdminController {
   @PostMapping("/query")
   public TbUserManageMessage query(PageBean pageBean, TbUser user) throws Exception {
     return tbUserService.query(pageBean, user);
+  }
+
+  @ApiOperation(value = "启用用户", notes = "启用用户，需要token信息，需要管理员角色登录")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "aid", value = "要启用的用户编号") })
+  @PostMapping("/enableUser")
+  public TbUserMessage enableUser(TbUser user) throws Exception {
+    return tbUserService.updateEnable(user, true);
+  }
+
+  @ApiOperation(value = "禁用用户", notes = "禁用用户，需要token信息，需要管理员角色登录")
+  @ApiImplicitParams({ @ApiImplicitParam(name = "aid", value = "要禁用的用户编号") })
+  @PostMapping("/disableUser")
+  public TbUserMessage disableUser(TbUser user) throws Exception {
+    return tbUserService.updateEnable(user, false);
   }
 
 }

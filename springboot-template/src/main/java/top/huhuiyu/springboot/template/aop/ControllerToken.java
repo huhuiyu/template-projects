@@ -117,6 +117,7 @@ public class ControllerToken implements BaseControllerAop {
     authInfo.setToken(token);
     authInfo.setLoginUser(redisTokenInfo.getTbUser());
     authInfo.setIp(redisTokenInfo.getIp());
+    log.debug("用户认证信息：{}", authInfo);
   }
 
   /**

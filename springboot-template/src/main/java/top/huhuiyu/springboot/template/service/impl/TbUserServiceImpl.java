@@ -1,5 +1,9 @@
 package top.huhuiyu.springboot.template.service.impl;
 
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,8 @@ import top.huhuiyu.springboot.template.utils.SystemConstants;
 @Transactional(rollbackFor = Exception.class)
 public class TbUserServiceImpl implements TbUserService {
 
+  private static final Logger log = LoggerFactory.getLogger(TbUserServiceImpl.class);
+
   @Autowired
   private TbUserDAO tbUserDAO;
   @Autowired
@@ -56,10 +62,7 @@ public class TbUserServiceImpl implements TbUserService {
   public TbUserMessage login(TbUser user) throws Exception {
     SystemConfig systemConfig = redisService.readSystemConfig();
     TbUserMessage message = new TbUserMessage();
-    // 按照用户名查询
-    QueryWrapper<TbUser> wrapper = new QueryWrapper<TbUser>();
-    wrapper.eq("username", user.getUsername());
-    TbUser check = tbUserDAO.selectOne(wrapper);
+    TbUser check = queryByName(user);
     if (check == null) {
       message.setFailInfo("用户不存在");
       return message;
@@ -72,6 +75,11 @@ public class TbUserServiceImpl implements TbUserService {
       message.setFailInfo(SystemConstants.PASSWORD_ERROR_INFO);
       return message;
     }
+    // 校验启用状态
+    if (!SystemConstants.ENABLE.equalsIgnoreCase(check.getEnable())) {
+      message.setFailInfo("用户已经被禁用");
+      return message;
+    }
     // 校验密码
     String pwd = DigestUtils.md5DigestAsHex((user.getPassword() + check.getSalt()).getBytes());
     if (!check.getPassword().equals(pwd)) {
@@ -81,10 +89,10 @@ public class TbUserServiceImpl implements TbUserService {
       return message;
     }
     // 保存用户登录信息到redis
-    processUserInfo(check);
     AuthInfo authInfo = ApplicationUtil.getBean(AuthInfo.class);
     authInfo.setLoginUser(check);
     redisService.saveUser(authInfo.getToken(), check);
+    processUserInfo(check);
     // 返回用户信息
     message.setSuccessInfo("登录成功");
     message.setTbUser(check);
@@ -105,6 +113,7 @@ public class TbUserServiceImpl implements TbUserService {
     TbUserMessage message = new TbUserMessage();
     AuthInfo authInfo = ApplicationUtil.getBean(AuthInfo.class);
     message.setTbUser(authInfo.getLoginUser());
+    processUserInfo(message.getTbUser());
     message.setMessage("");
     message.setSuccess(authInfo.getLoginUser() != null);
     return message;
@@ -133,6 +142,87 @@ public class TbUserServiceImpl implements TbUserService {
     message.setList(page.getRecords());
     message.setSuccessInfo("");
     return message;
+  }
+
+  @Override
+  public TbUserMessage updateEnable(TbUser user, boolean enable) throws Exception {
+    // 应答消息
+    TbUserMessage message = new TbUserMessage();
+    user = tbUserDAO.selectById(user.getAid());
+    if (user == null) {
+      message.setFailInfo("用户不存在");
+      return message;
+    }
+    user.setEnable(enable ? SystemConstants.ENABLE : SystemConstants.DISABLE);
+    int result = tbUserDAO.updateById(user);
+    if (result == 1) {
+      message.setSuccessInfo("修改用户启用状态成功");
+    } else {
+      message.setFailInfo("修改用户启用状态失败");
+    }
+
+    return message;
+  }
+
+  @Override
+  public TbUserMessage reg(TbUser user) throws Exception {
+    TbUserMessage message = new TbUserMessage();
+    // 校验用户是否存在
+    TbUser check = queryByName(user);
+    if (check != null) {
+      message.setFailInfo("用户名已经被占用");
+      return message;
+    }
+    // 密码加盐处理
+    user.setSalt(SystemConstants.randomString(SystemConstants.SALT_LENGTH));
+    String pwd = DigestUtils.md5DigestAsHex((user.getPassword() + user.getSalt()).getBytes());
+    user.setPassword(pwd);
+    // 启用状态,开发key,角色
+    user.setEnable(SystemConstants.ENABLE);
+    user.setRole(SystemConstants.ROLE_USER);
+    user.setAccessKey(UUID.randomUUID().toString());
+    // 保存数据
+    int result = tbUserDAO.insert(user);
+    if (result == 1) {
+      log.debug("注册用户信息：{}", user);
+      message.setSuccessInfo("用户注册成功");
+    } else {
+      message.setFailInfo("用户注册失败");
+    }
+    return message;
+  }
+
+  @Override
+  public TbUserMessage updatePwd(TbUser user) throws Exception {
+    // 应答消息
+    TbUserMessage message = new TbUserMessage();
+    // 修改密码
+    TbUser loginUser = ApplicationUtil.getBean(AuthInfo.class).getLoginUser();
+    String pwd = DigestUtils.md5DigestAsHex((user.getPassword() + loginUser.getSalt()).getBytes());
+    loginUser.setPassword(pwd);
+    // 保存数据
+    int result = tbUserDAO.updateById(loginUser);
+    if (result == 1) {
+      message.setSuccessInfo("修改密码成功");
+    } else {
+      message.setFailInfo("修改密码失败");
+    }
+    return message;
+  }
+
+  /**
+   * 按照用户名查询用户信息
+   * 
+   * @param user 查询参数
+   * 
+   * @return 用户名对应用户信息
+   */
+  private TbUser queryByName(TbUser user) {
+    // 按照用户名查询
+    QueryWrapper<TbUser> wrapper = new QueryWrapper<TbUser>();
+    wrapper.eq("username", user.getUsername());
+    TbUser check = tbUserDAO.selectOne(wrapper);
+    return check;
   }
 
 }

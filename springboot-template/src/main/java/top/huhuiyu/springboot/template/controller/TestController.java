@@ -39,7 +39,7 @@ public class TestController {
   private MailService mailService;
   @Autowired
   private UtilDAO utilDAO;
-  
+
   @ApiOperation(value = "lombok字段", notes = "lombok字段功能测试")
   @ApiImplicitParams({ @ApiImplicitParam(name = "info", value = "测试info字段参数") })
   @PostMapping("/lombok")

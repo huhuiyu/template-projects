@@ -1,5 +1,7 @@
 package top.huhuiyu.springboot.template.utils;
 
+import java.util.Random;
+
 /**
  * 系统常量定义
  * 
@@ -142,4 +144,54 @@ public interface SystemConstants {
    */
   String IP_TOKEN_ERROR_INFO = "刷新token超过次数，请求将会被限制一段时间";
 
+  /**
+   * 启用状态
+   */
+  String ENABLE = "y";
+  /**
+   * 禁用状态
+   */
+  String DISABLE = "n";
+
+  /**
+   * 随机字符
+   */
+  String RANDOM_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  /**
+   * 随机对象
+   */
+  Random RANDOM = new Random();
+  /**
+   * 密码盐长度
+   */
+  int SALT_LENGTH = 5;
+
+  /**
+   * 产生指定长度的随机字符串
+   * 
+   * @param len 字符串长度
+   * 
+   * @return 指定长度的随机字符串
+   */
+  static String randomString(int len) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < len; i++) {
+      int index = RANDOM.nextInt(RANDOM_STRING.length());
+      sb.append(RANDOM_STRING.substring(index, index + 1));
+    }
+    return sb.toString();
+  }
+
+  /**
+   * 用户角色
+   */
+  String ROLE_USER = "user";
+  /**
+   * 管理员角色
+   */
+  String ROLE_ADMIN = "admin";
+  /**
+   * 用户角色
+   */
+  String ROLE_APP_ADMIN = "app-admin";
 }

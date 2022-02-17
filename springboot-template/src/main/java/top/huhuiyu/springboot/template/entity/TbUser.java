@@ -42,7 +42,7 @@ public class TbUser extends BaseEntity {
   @ApiModelProperty(value = "登录名", example = "user")
   @ApiParam(hidden = true)
   private java.lang.String username;
-  @NotBlank(message = "密码必须填写", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class })
+  @NotBlank(message = "密码必须填写", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class, TbUserValidate.Password.class })
   @Pattern(regexp = SystemConstants.MD5_CHECK, message = "密码必须md5加密", groups = { TbUserValidate.Auth.class, TbUserValidate.Info.class })
   @ApiModelProperty(value = "密码", example = "900150983cd24fb0d6963f7d28e17f72")
   @ApiParam(hidden = true)
@@ -50,6 +50,7 @@ public class TbUser extends BaseEntity {
   @ApiModelProperty(hidden = true)
   @ApiParam(hidden = true)
   private java.lang.String salt;
+  @NotBlank(message = "用户名必须填写", groups = { TbUserValidate.Info.class })
   @ApiModelProperty(value = "用户名", example = "黑暗骑士")
   @ApiParam(hidden = true)
   private java.lang.String nickname;

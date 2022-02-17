@@ -24,4 +24,13 @@ public interface TbUserValidate {
    */
   interface Info {
   }
+
+  /**
+   * 密码提交
+   * 
+   * @author DarkKnight
+   *
+   */
+  interface Password {
+  }
 }
