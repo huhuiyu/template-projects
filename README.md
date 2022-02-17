@@ -26,3 +26,8 @@
   - 为了安全没有提供`application.yml`，但是在测试文件夹里面提供了`application.yml.template`配置模板文件
   - 配置文件中ENC(加密密码)可以用MainTest中的加解密测试生成
 - [springboot模板项目](/springboot-template/)
+  - 项目需要配置redis和mysql，[文档ui访问地址](http://127.0.0.1:20000/doc.html)
+  - 数据库脚本请查看项目的sql目录说明
+  - 系统核心配置在SystemConfig实体类中，该对象的默认值会被初始化到redis
+  - 用户登录信息保存在redis中，通过AuthInfo对象（使用spring的request作用域注入）
+  - 项目使用了[lombok](https://projectlombok.org/)，需要配置ide相关插件
