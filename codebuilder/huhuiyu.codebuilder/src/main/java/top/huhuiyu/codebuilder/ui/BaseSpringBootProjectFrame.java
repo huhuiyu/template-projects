@@ -87,51 +87,15 @@ public abstract class BaseSpringBootProjectFrame extends JFrame implements Actio
   }
 
   private void setTestDefault() {
-    // 测试用默认值
-    // tfProjectName.setText("huhuiyu.codebuilder.demo");
-    // tfPackageName.setText("top.huhuiyu.codebuilder.demo");
-    // tfAuthor.setText("胡辉煜");
-    // tfIp.setText("hhy520.top");
-    // tfPort.setText("3306");
-    // tfUsername.setText("test");
-    // tfPassword.setText("Test4-sql");
-    // tfDatabase.setText("code_build_demo");
-
-    // tfProjectName.setText("oss-manage-service");
-    // tfPackageName.setText("top.huhuiyu.app.ossmanage");
-    // tfAuthor.setText("胡辉煜");
-    // tfIp.setText("42.193.230.201");
-    // tfPort.setText("3306");
-    // tfUsername.setText("huhuiyu");
-    // tfPassword.setText("Huhuiyu1901...");
-    // tfDatabase.setText("oss_manage");
-
-    // tfProjectName.setText("teach-manage-service");
-    // tfPackageName.setText("top.huhuiyu.teachmanage");
-    // tfAuthor.setText("胡辉煜");
-    // tfIp.setText("42.193.230.201");
-    // tfPort.setText("3306");
-    // tfUsername.setText("huhuiyu");
-    // tfPassword.setText("Huhuiyu1901...");
-    // tfDatabase.setText("laohu");
 
     tfProjectName.setText("huhuiyu.teach.service");
     tfPackageName.setText("top.huhuiyu.teachservice");
     tfAuthor.setText("胡辉煜");
-    tfIp.setText("shuailanjun.top");
-    tfPort.setText("3306");
-    tfUsername.setText("test");
-    tfPassword.setText("User4-test");
-    tfDatabase.setText("db_teach_service");
-
-    // tfProjectName.setText("codemart-service");
-    // tfPackageName.setText("projects.codemart");
-    // tfAuthor.setText("DarkKnight");
-    // tfIp.setText("shuailanjun.top");
-    // tfPort.setText("3306");
-    // tfUsername.setText("test");
-    // tfPassword.setText("User4-test");
-    // tfDatabase.setText("codemart_service");
+    tfIp.setText("数据库ip地址");
+    tfPort.setText("数据库端口");
+    tfUsername.setText("数据库用户名");
+    tfPassword.setText("数据库密码");
+    tfDatabase.setText("数据库名称");
 
     tfOutputDir.setText("d:\\output");
   }
