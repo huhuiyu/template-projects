@@ -20,7 +20,10 @@ public class BaseParameter extends BaseEntity {
    * 请求的动作（时间戳回应）
    */
   public static final String ACTION_TIMESTAMP = "timestamp";
-
+  
+  /**
+   * 请求的动作
+   */
   String action;
 
 }

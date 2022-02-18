@@ -15,6 +15,12 @@ import top.huhuiyu.springboot.template.message.TbUserManageMessage;
 import top.huhuiyu.springboot.template.message.TbUserMessage;
 import top.huhuiyu.springboot.template.service.TbUserService;
 
+/**
+ * 用户管理控制器
+ * 
+ * @author DarkKnight
+ *
+ */
 @RestController
 @Api(tags = "用户管理接口")
 @RequestMapping("/admin/user")

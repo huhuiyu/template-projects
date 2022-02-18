@@ -31,3 +31,7 @@
   - 系统核心配置在SystemConfig实体类中，该对象的默认值会被初始化到redis
   - 用户登录信息保存在redis中，通过AuthInfo对象（使用spring的request作用域注入）
   - 项目使用了[lombok](https://projectlombok.org/)，需要配置ide相关插件
+
+- 代码生成工具
+  - 程序启动界面类为huhuiyu.coderbuilder中ui里面MySpringBootProjectFrame
+  - 代码模板请查看codebuilder-templates中说明文件

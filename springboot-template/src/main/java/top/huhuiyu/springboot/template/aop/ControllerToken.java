@@ -19,13 +19,15 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import top.huhuiyu.springboot.template.base.BaseResult;
+import top.huhuiyu.springboot.template.dao.TbActionsDAO;
 import top.huhuiyu.springboot.template.entity.AuthInfo;
 import top.huhuiyu.springboot.template.entity.RedisTokenInfo;
 import top.huhuiyu.springboot.template.entity.TbActions;
 import top.huhuiyu.springboot.template.entity.TbUser;
 import top.huhuiyu.springboot.template.service.RedisService;
-import top.huhuiyu.springboot.template.service.TbActionsService;
 import top.huhuiyu.springboot.template.utils.ApplicationUtil;
 import top.huhuiyu.springboot.template.utils.IpUtil;
 import top.huhuiyu.springboot.template.utils.SystemConstants;
@@ -43,7 +45,7 @@ public class ControllerToken implements BaseControllerAop {
   @Autowired
   private RedisService redisService;
   @Autowired
-  private TbActionsService tbActionsService;
+  private TbActionsDAO tbActionsDAO;
 
   @Around("controller()")
   public Object around(ProceedingJoinPoint pjp) throws Throwable {
@@ -136,7 +138,9 @@ public class ControllerToken implements BaseControllerAop {
     tbActions.setUrl(request.getRequestURI().replaceFirst(request.getContextPath(), ""));
     log.debug("应用路径：{}，请求action：{}", request.getContextPath(), tbActions.getUrl());
     // 查询数据库中的信息
-    tbActions = tbActionsService.queryByUrl(tbActions);
+    QueryWrapper<TbActions> wrapper = new QueryWrapper<TbActions>();
+    wrapper.eq("url", tbActions.getUrl());
+    tbActions = tbActionsDAO.selectOne(wrapper);
     // 地址信息不存在就表示不受权限管理
     if (tbActions == null) {
       return true;

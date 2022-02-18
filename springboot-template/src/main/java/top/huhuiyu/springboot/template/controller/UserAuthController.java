@@ -17,7 +17,7 @@ import top.huhuiyu.springboot.template.service.TbUserService;
 import top.huhuiyu.springboot.template.validate.TbUserValidate;
 
 /**
- * 首页控制器
+ * 用户认证相关控制器
  * 
  * @author DarkKnight
  *
