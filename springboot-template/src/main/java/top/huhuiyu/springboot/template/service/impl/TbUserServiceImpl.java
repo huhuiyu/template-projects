@@ -120,22 +120,49 @@ public class TbUserServiceImpl implements TbUserService {
   }
 
   @Override
-  public TbUserManageMessage query(PageBean pageBean, TbUser user) throws Exception {
+  public TbUserManageMessage query(PageBean pageBean, TbUser user, Integer orderBy) throws Exception {
     // 处理分页信息
     if (pageBean == null) {
       pageBean = new PageBean();
     }
     IPage<TbUser> page = new Page<TbUser>();
     pageBean.toIPage(page);
-    // 处理参数
-    if (user != null && StringUtils.hasText(user.getUsername())) {
-      user.setUsername(String.format(SystemConstants.LIKE_INFO, user.getUsername()));
+    // 处理查询参数
+    if (user == null) {
+      user = new TbUser();
     }
-    if (user != null && StringUtils.hasText(user.getNickname())) {
-      user.setNickname(String.format(SystemConstants.LIKE_INFO, user.getNickname()));
+    QueryWrapper<TbUser> wrapper = new QueryWrapper<TbUser>();
+    if (StringUtils.hasText(user.getUsername())) {
+      wrapper.like("username", String.format(SystemConstants.LIKE_INFO, user.getUsername().trim()));
+    }
+    if (StringUtils.hasText(user.getNickname())) {
+      wrapper.like("nickname", String.format(SystemConstants.LIKE_INFO, user.getNickname().trim()));
+    }
+    if (StringUtils.hasText(user.getEnable())) {
+      wrapper.eq("enable", user.getEnable().trim());
+    }
+    // 排序
+    switch (orderBy) {
+      case 1:
+        wrapper.orderByDesc("aid");
+        break;
+      case 2:
+        wrapper.orderByAsc("aid");
+        break;
+      case 3:
+        wrapper.orderByAsc("username");
+        break;
+      case 4:
+        wrapper.orderByDesc("username");
+        break;
+      case 5:
+        wrapper.orderByAsc("enable");
+        break;
+      default:
+        break;
     }
     // 分页查询
-    page = tbUserDAO.queryAll(page, user);
+    page = tbUserDAO.selectPage(page, wrapper);
     // 应答消息
     TbUserManageMessage message = new TbUserManageMessage();
     message.setPage(pageBean.fromIPage(page));

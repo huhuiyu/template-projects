@@ -30,10 +30,11 @@ public class UserAdminController {
 
   @ApiOperation(value = "查询用户信息", notes = "查询用户信息，需要token信息，需要管理员角色登录")
   @ApiImplicitParams({ @ApiImplicitParam(name = "username", value = "登录名模糊查询"), @ApiImplicitParam(name = "nickname", value = "用户名模糊查询"), @ApiImplicitParam(name = "enable", value = "是否启用"),
-      @ApiImplicitParam(name = "pageSize", value = "分页大小"), @ApiImplicitParam(name = "pageNumber", value = "当前页码") })
+      @ApiImplicitParam(name = "pageSize", value = "分页大小"), @ApiImplicitParam(name = "pageNumber", value = "当前页码"),
+      @ApiImplicitParam(name = "orderBy", value = "排序方式,1:注册时间降序，2：注册时间升序，3：登录名称升序，4：登录名称降序，5：启用状态") })
   @PostMapping("/query")
-  public TbUserManageMessage query(PageBean pageBean, TbUser user) throws Exception {
-    return tbUserService.query(pageBean, user);
+  public TbUserManageMessage query(PageBean pageBean, TbUser user, Integer orderBy) throws Exception {
+    return tbUserService.query(pageBean, user, orderBy);
   }
 
   @ApiOperation(value = "启用用户", notes = "启用用户，需要token信息，需要管理员角色登录")

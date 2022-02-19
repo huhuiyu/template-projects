@@ -47,12 +47,13 @@ public interface TbUserService {
    * 
    * @param pageBean 分页信息
    * @param user     过滤条件
+   * @param orderBy  排序条件
    * 
    * @return 用户信息列表
    * 
    * @throws Exception 处理发生异常
    */
-  TbUserManageMessage query(PageBean pageBean, TbUser user) throws Exception;
+  TbUserManageMessage query(PageBean pageBean, TbUser user, Integer orderBy) throws Exception;
 
   /**
    * 修改用户启用状态
