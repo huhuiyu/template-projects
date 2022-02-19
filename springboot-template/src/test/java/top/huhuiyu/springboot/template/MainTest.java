@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.DigestUtils;
 
 import top.huhuiyu.springboot.template.base.BaseResult;
+import top.huhuiyu.springboot.template.utils.SystemConstants;
 
 /**
  * 主测试
@@ -43,9 +44,10 @@ public class MainTest {
 
   @Test
   public void md5() throws Exception {
+    log.debug("随机字符串======>{}", SystemConstants.randomString(5));
+   
     log.debug("md5加密{}的结果:{}", "admin", DigestUtils.md5DigestAsHex("admin".getBytes()));
     log.debug("md5加salt的结果:{}", DigestUtils.md5DigestAsHex((DigestUtils.md5DigestAsHex("admin".getBytes()) + "WF5QS7").getBytes()));
-
   }
 
   @Test
@@ -57,5 +59,4 @@ public class MainTest {
   public void decrypt() throws Exception {
     log.debug(encryptor.decrypt("g86U4xgLKixpsWxWguiOWI3iQfp2qk12dGSsXjTKoQvwzb59pPeflwRhhIWwAD6L"));
   }
-
 }

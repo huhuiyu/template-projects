@@ -98,7 +98,7 @@ public interface SystemConstants {
   /**
    * 系统配置key;
    */
-  String SYSTEM_CONFIG_KEY = "springboot_template_system_config";
+  String SYSTEM_CONFIG_KEY = "${baseInfo.projectName}_system_config";
 
   /**
    * 用户名正则
