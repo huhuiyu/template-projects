@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import top.huhuiyu.springboot.template.dao.TbUserDAO;
 import top.huhuiyu.springboot.template.entity.TbUser;
+import top.huhuiyu.springboot.template.utils.SystemConstants;
 
 /**
  * mapper功能测试
@@ -35,12 +36,14 @@ public class MapperTest {
   public void testQueryUser() throws Exception {
     IPage<TbUser> page = new Page<TbUser>(1, 2);
     TbUser user = new TbUser();
-    IPage<TbUser> list = tbUserDAO.queryAll(page, user);
+    IPage<TbUser> list = tbUserDAO.selectPage(page, null);
     log.debug("分页信息：{},{},{}", list.getTotal(), list.getPages(), list.getCurrent());
     showUserList(list.getRecords(), "分页数据");
     page.setSize(1000);
     user.setUsername(String.format("%%%s%%", "ad"));
-    list = tbUserDAO.queryAll(page, user);
+    QueryWrapper<TbUser> wrapper = new QueryWrapper<TbUser>();
+    wrapper.like("username", String.format(SystemConstants.LIKE_INFO, user.getUsername().trim()));
+    list = tbUserDAO.selectPage(page, wrapper);
     log.debug("分页信息：{},{},{}", list.getTotal(), list.getPages(), list.getCurrent());
     showUserList(list.getRecords(), "条件查询");
   }
