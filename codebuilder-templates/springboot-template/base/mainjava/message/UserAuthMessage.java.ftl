@@ -19,7 +19,7 @@ import ${builderUtil.getSubPackage("entity")}.TbUser;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "测试应答信息", description = "测试接口的应答信息")
+@ApiModel(value = "用户信息应答", description = "用户信息应答")
 public class UserAuthMessage extends BaseResult {
   private static final long serialVersionUID = ${builderUtil.serialVersionUid};
 

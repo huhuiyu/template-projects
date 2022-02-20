@@ -14,7 +14,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
   /**
    * 修改${builderUtil.getClassName(tableInfo)}信息
    * 
-   * @param model 页面提交数据
+   * @param ${builderUtil.getTableFieldName(tableInfo)} 页面提交数据
    * @return 修改${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
@@ -23,7 +23,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
   /**
    * 删除${builderUtil.getClassName(tableInfo)}信息
    * 
-   * @param model 页面提交数据
+   * @param ${builderUtil.getTableFieldName(tableInfo)} 页面提交数据
    * @return 删除${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
@@ -32,7 +32,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
   /**
    * 添加${builderUtil.getClassName(tableInfo)}信息
    * 
-   * @param model 页面提交数据
+   * @param ${builderUtil.getTableFieldName(tableInfo)} 页面提交数据
    * @return 添加${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
@@ -41,7 +41,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
   /**
    * 按照主键查询${builderUtil.getClassName(tableInfo)}信息
    * 
-   * @param model 页面提交数据
+   * @param ${builderUtil.getTableFieldName(tableInfo)} 页面提交数据
    * @return 主键查询${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
@@ -50,7 +50,8 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
   /**
    * 分页查询${builderUtil.getClassName(tableInfo)}信息
    * 
-   * @param model 页面提交数据
+   * @param pageBean 分页信息
+   * @param ${builderUtil.getTableFieldName(tableInfo)} 页面提交数据
    * @return 分页查询${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
