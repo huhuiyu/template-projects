@@ -36,7 +36,7 @@ public class TbUser extends BaseEntity {
   @TableId(type = IdType.AUTO)
   @ApiModelProperty(value = "用户编号", example = "100")
   @ApiParam(hidden = true)
-  private java.lang.Integer aid;
+  private java.lang.Integer uid;
   @NotBlank(message = "登录名必须填写", groups = { UserAuthValidate.Auth.class, UserAuthValidate.Info.class })
   @Pattern(regexp = SystemConstants.USERNAME_CHECK, message = "登录名必须是4-16位长度的字母和数字以及_-的组合，必须是字母开头", groups = { UserAuthValidate.Auth.class, UserAuthValidate.Info.class })
   @ApiModelProperty(value = "登录名", example = "user")

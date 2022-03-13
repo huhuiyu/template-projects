@@ -3,6 +3,7 @@ package ${builderUtil.getSubPackage("dao")};
 import java.util.Date;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 工具dao
@@ -19,6 +20,7 @@ public interface UtilDAO {
    * 
    * @throws Exception
    */
+  @Select("select now()")
   Date queryTime() throws Exception;
 
   /**
@@ -28,5 +30,6 @@ public interface UtilDAO {
    * 
    * @throws Exception
    */
+  @Select("select unix_timestamp()")
   Long queryTimestamp() throws Exception;
 }

@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import ${builderUtil.getSubPackage("base")}.BaseDataResult;
+import ${builderUtil.getSubPackage("base")}.BaseResult;
 import ${builderUtil.getSubPackage("entity")}.PageBean;
 import ${builderUtil.getSubPackage("entity")}.${builderUtil.getClassName(tableInfo)};
 import ${builderUtil.getSubPackage("message")}.${builderUtil.getClassName(tableInfo)}Message;
@@ -41,7 +43,7 @@ public class ${builderUtil.getClassName(tableInfo)}Controller {
     </#list>
   })
   @PostMapping("/add")
-  public ${builderUtil.getClassName(tableInfo)}Message add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseResult add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     return ${builderUtil.getTableFieldName(tableInfo)}Service.add(${builderUtil.getTableFieldName(tableInfo)});
   }
 
@@ -52,7 +54,7 @@ public class ${builderUtil.getClassName(tableInfo)}Controller {
     </#list>
   })
   @PostMapping("/update")
-  public ${builderUtil.getClassName(tableInfo)}Message update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseResult update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     return ${builderUtil.getTableFieldName(tableInfo)}Service.update(${builderUtil.getTableFieldName(tableInfo)});
   }
 
@@ -63,7 +65,7 @@ public class ${builderUtil.getClassName(tableInfo)}Controller {
     </#list>
   })
   @PostMapping("/delete")
-  public ${builderUtil.getClassName(tableInfo)}Message delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseResult delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     return ${builderUtil.getTableFieldName(tableInfo)}Service.delete(${builderUtil.getTableFieldName(tableInfo)});
   }
 
@@ -74,7 +76,7 @@ public class ${builderUtil.getClassName(tableInfo)}Controller {
     </#list>
   })
   @PostMapping("/queryByKey")
-  public ${builderUtil.getClassName(tableInfo)}Message queryByKey(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseDataResult<${builderUtil.getClassName(tableInfo)}> queryByKey(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     return ${builderUtil.getTableFieldName(tableInfo)}Service.queryByKey(${builderUtil.getTableFieldName(tableInfo)});
   }
 

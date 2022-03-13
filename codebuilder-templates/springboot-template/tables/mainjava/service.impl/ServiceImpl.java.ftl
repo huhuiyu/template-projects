@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import ${builderUtil.getSubPackage("base")}.BaseDataResult;
+import ${builderUtil.getSubPackage("base")}.BaseResult;
 import ${builderUtil.getSubPackage("dao")}.${builderUtil.getClassName(tableInfo)}DAO;
 import ${builderUtil.getSubPackage("entity")}.PageBean;
 import ${builderUtil.getSubPackage("entity")}.${builderUtil.getClassName(tableInfo)};
@@ -45,20 +47,20 @@ public class ${builderUtil.getClassName(tableInfo)}ServiceImpl implements ${buil
   }
 
   @Override
-  public ${builderUtil.getClassName(tableInfo)}Message queryByKey(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
-    ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
+  public BaseDataResult<${builderUtil.getClassName(tableInfo)}> queryByKey(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+    BaseDataResult<${builderUtil.getClassName(tableInfo)}> message = new BaseDataResult<${builderUtil.getClassName(tableInfo)}>();
     ${builderUtil.getTableFieldName(tableInfo)} = ${builderUtil.getTableFieldName(tableInfo)}DAO.selectById(${builderUtil.getTableFieldName(tableInfo)});
     if (${builderUtil.getTableFieldName(tableInfo)} == null) {
       message.setFailInfo("查无记录");
     } else {
       message.setSuccessInfo("");
-      message.${builderUtil.getTableSetter(tableInfo)}(${builderUtil.getTableFieldName(tableInfo)});
+      message.setData(${builderUtil.getTableFieldName(tableInfo)});
     }
     return message;
   }
 
   @Override
-  public ${builderUtil.getClassName(tableInfo)}Message add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseResult add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
     int result = ${builderUtil.getTableFieldName(tableInfo)}DAO.insert(${builderUtil.getTableFieldName(tableInfo)});
     if (result == 1) {
@@ -70,7 +72,7 @@ public class ${builderUtil.getClassName(tableInfo)}ServiceImpl implements ${buil
   }
 
   @Override
-  public ${builderUtil.getClassName(tableInfo)}Message delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseResult delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
     int result = ${builderUtil.getTableFieldName(tableInfo)}DAO.deleteById(${builderUtil.getTableFieldName(tableInfo)});
     if (result == 1) {
@@ -82,7 +84,7 @@ public class ${builderUtil.getClassName(tableInfo)}ServiceImpl implements ${buil
   }
 
   @Override
-  public ${builderUtil.getClassName(tableInfo)}Message update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
+  public BaseResult update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
     ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
     int result = ${builderUtil.getTableFieldName(tableInfo)}DAO.updateById(${builderUtil.getTableFieldName(tableInfo)});
     if (result == 1) {

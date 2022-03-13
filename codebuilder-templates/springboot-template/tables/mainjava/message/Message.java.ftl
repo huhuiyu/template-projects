@@ -26,8 +26,6 @@ public class ${builderUtil.getClassName(tableInfo)}Message extends BaseResult {
 
   private static final long serialVersionUID = ${builderUtil.serialVersionUid};
 
-  @ApiModelProperty(value = "${builderUtil.getClassName(tableInfo)}")
-  private ${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)};
   @ApiModelProperty(value = "分页信息")
   private PageBean page;
   @ApiModelProperty(value = "查询结果")

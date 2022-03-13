@@ -1,5 +1,7 @@
 package ${builderUtil.getSubPackage("service")};
 
+import ${builderUtil.getSubPackage("base")}.BaseDataResult;
+import ${builderUtil.getSubPackage("base")}.BaseResult;
 import ${builderUtil.getSubPackage("entity")}.PageBean;
 import ${builderUtil.getSubPackage("entity")}.${builderUtil.getClassName(tableInfo)};
 import ${builderUtil.getSubPackage("message")}.${builderUtil.getClassName(tableInfo)}Message;
@@ -18,7 +20,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
    * @return 修改${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
-  ${builderUtil.getClassName(tableInfo)}Message update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
+  BaseResult update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
 
   /**
    * 删除${builderUtil.getClassName(tableInfo)}信息
@@ -27,7 +29,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
    * @return 删除${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
-  ${builderUtil.getClassName(tableInfo)}Message delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
+  BaseResult delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
 
   /**
    * 添加${builderUtil.getClassName(tableInfo)}信息
@@ -36,7 +38,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
    * @return 添加${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
-  ${builderUtil.getClassName(tableInfo)}Message add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
+  BaseResult add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
 
   /**
    * 按照主键查询${builderUtil.getClassName(tableInfo)}信息
@@ -45,7 +47,7 @@ public interface ${builderUtil.getClassName(tableInfo)}Service {
    * @return 主键查询${builderUtil.getClassName(tableInfo)}信息的结果
    * @throws Exception 处理发生错误
    */
-  ${builderUtil.getClassName(tableInfo)}Message queryByKey(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
+  BaseDataResult<${builderUtil.getClassName(tableInfo)}> queryByKey(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception;
 
   /**
    * 分页查询${builderUtil.getClassName(tableInfo)}信息

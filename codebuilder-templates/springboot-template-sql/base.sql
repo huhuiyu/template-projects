@@ -17,7 +17,7 @@ select * from tb_role;
 drop table if exists tb_user;
 create table tb_user
 (
-  aid integer auto_increment primary key not null comment '主键',
+  uid integer auto_increment primary key not null comment '主键',
   username varchar(20) unique not null comment '登录用户名',
   password varchar(50) not null comment '登录密码',
   salt varchar(20) not null comment '密码盐',
