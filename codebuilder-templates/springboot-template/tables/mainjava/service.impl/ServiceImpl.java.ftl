@@ -61,7 +61,7 @@ public class ${builderUtil.getClassName(tableInfo)}ServiceImpl implements ${buil
 
   @Override
   public BaseResult add(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
-    ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
+    BaseResult message = new BaseResult();
     int result = ${builderUtil.getTableFieldName(tableInfo)}DAO.insert(${builderUtil.getTableFieldName(tableInfo)});
     if (result == 1) {
       message.setSuccessInfo("添加数据成功");
@@ -73,7 +73,7 @@ public class ${builderUtil.getClassName(tableInfo)}ServiceImpl implements ${buil
 
   @Override
   public BaseResult delete(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
-    ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
+    BaseResult message = new BaseResult();
     int result = ${builderUtil.getTableFieldName(tableInfo)}DAO.deleteById(${builderUtil.getTableFieldName(tableInfo)});
     if (result == 1) {
       message.setSuccessInfo("删除数据成功");
@@ -85,7 +85,7 @@ public class ${builderUtil.getClassName(tableInfo)}ServiceImpl implements ${buil
 
   @Override
   public BaseResult update(${builderUtil.getClassName(tableInfo)} ${builderUtil.getTableFieldName(tableInfo)}) throws Exception {
-    ${builderUtil.getClassName(tableInfo)}Message message = new ${builderUtil.getClassName(tableInfo)}Message();
+    BaseResult message = new BaseResult();
     int result = ${builderUtil.getTableFieldName(tableInfo)}DAO.updateById(${builderUtil.getTableFieldName(tableInfo)});
     if (result == 1) {
       message.setSuccessInfo("修改数据成功");
